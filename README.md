@@ -13,6 +13,7 @@ I try to cover with tests my code, but i don't sure...
 2. Next open command line and input next line in project's repository:
 
 <code>mkdir build</code>
+
 <code>cmake ..</code>
 
 3. If you want to compile file, do next line for example:
