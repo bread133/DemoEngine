@@ -16,6 +16,6 @@ I try to cover with tests my code, but i don't sure...
 
 <code>cmake ..</code>
 
-3. If you want to compile file, do next line for example:
+3. If you want to compile file, execute next line for example:
 
 <code>cmake --build . --config RELEASE</code>
