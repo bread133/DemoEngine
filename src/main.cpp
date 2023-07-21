@@ -2,64 +2,28 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "Render/Window.h"
 
 // Function prototypes
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 // Window dimensions
-const GLuint WIDTH = 800, HEIGHT = 600;
+const GLuint WIDTH = 1080, HEIGHT = 720;
 
 // The MAIN function, from here we start the application and run the game loop
 int main()
 {
-    std::cout << "Starting GLFW context, OpenGL 3.3" << std::endl;
-    // Init GLFW
-    glfwInit();
-    // Set all the required options for GLFW
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-    // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", NULL, NULL);
-    glfwMakeContextCurrent(window);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    // Set the required callback functions
-    glfwSetKeyCallback(window, key_callback);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize OpenGL context" << std::endl;
-        return -1;
-    }
-
-    // Define the viewport dimensions
-    glViewport(0, 0, WIDTH, HEIGHT);
-
+    Window::initialize(WIDTH, HEIGHT, "Demo");
     // Game loop
-    while (!glfwWindowShouldClose(window))
+    while (true)
     {
-        // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
         glfwPollEvents();
 
-        // Render
-        // Clear the colorbuffer
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        // Swap the screen buffers
-        glfwSwapBuffers(window);
+        Window::colored(1.0f, 0.0f, 1.0f, 0.5f);
+        Window::swap_buffers();
     }
 
-    // Terminates GLFW, clearing any resources allocated by GLFW.
-    glfwTerminate();
+    Window::terminate();
     return 0;
 }
 
