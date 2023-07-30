@@ -3,18 +3,19 @@
 #include <GLFW/glfw3.h>
 #include<iostream>
 
-static GLFWwindow* window;
+GLFWwindow* Window::window;
 
 int Window::initialize(int width, int height, const char* title)
 {
-    std::cout << "Starting GLFW context, OpenGL 3.3" << std::endl;
+    setlocale(LC_ALL, "");
+    std::cout << "Запуск GLFW, версия OpenGL: 3.3" << std::endl;
 
     glfwInit();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
     window = glfwCreateWindow(width, height, title, NULL, NULL);
     glfwMakeContextCurrent(window);
@@ -33,7 +34,6 @@ int Window::initialize(int width, int height, const char* title)
 
     // Define the viewport dimensions
     glViewport(0, 0, width, height);
-
     return 0;
 }
 
@@ -45,10 +45,24 @@ void Window::terminate()
 void Window::colored(float red, float green, float blue, float alpha)
 {
     glClearColor(red, green, blue, alpha);
-    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Window::swap_buffers()
 {
     glfwSwapBuffers(window);
+}
+
+void Window::clear()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+bool Window::window_is_closed()
+{
+    return glfwWindowShouldClose(window);
+}
+
+void Window::poll_events()
+{
+    glfwPollEvents();
 }

@@ -1,20 +1,19 @@
 #include <iostream>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include "Render/Window.h"
 
 // Window dimensions
-const GLuint WIDTH = 1080, HEIGHT = 720;
+const int WIDTH = 1080, HEIGHT = 720;
 
 int main()
 {
     Window::initialize(WIDTH, HEIGHT, "Demo");
-    Window::colored(1.0f, 1.0f, 1.0f, 0.0f);
+    Window::colored(0.5f, 0.0f, 1.0f, 1.0f);
+
     // Game loop
-    while (true)
+    while (!Window::window_is_closed())
     {
-        
+        Window::poll_events();
+        Window::clear();
         Window::swap_buffers();
     }
 
