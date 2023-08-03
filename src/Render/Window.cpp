@@ -54,7 +54,7 @@ void Window::swap_buffers()
 
 void Window::clear()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 bool Window::window_is_closed()
