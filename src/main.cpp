@@ -29,6 +29,8 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), 
         g_vertex_buffer_data, GL_STATIC_DRAW);
     
+    Shader* shader = load("C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/triangle.glslv", 
+        "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/triangle.glslf");
 
     // Game loop
     while (!Window::window_is_closed())
@@ -42,10 +44,12 @@ int main()
             0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
             3,                  // size
             GL_FLOAT,           // type
-            GL_TRUE,           // normalized?
+            GL_FALSE,           // normalized?
             0,                  // stride
             (void*)0            // array buffer offset
         );
+
+        shader->use();
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -54,6 +58,7 @@ int main()
         Window::swap_buffers();
     }
 
+    delete shader;
     Window::terminate();
     return 0;
 }

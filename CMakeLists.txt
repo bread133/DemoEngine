@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.26 FATAL_ERROR)
 set(PROJECT_NAME DemoEngine)
 set(CMAKE_CXX_STANDART 20)
 
-include_directories(src/Render/Graphic/Templates)
-
 project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME} 
@@ -11,9 +9,7 @@ src/main.cpp
 src/Render/Window.cpp
 src/Render/Window.h
 src/Render/Graphic/Shader.cpp
-src/Render/Graphic/Shader.h
-src/Render/Graphic/Mesh.cpp
-src/Render/Graphic/Mesh.h)
+src/Render/Graphic/Shader.h)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
