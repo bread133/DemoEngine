@@ -1,13 +1,13 @@
 #pragma once
-
-class GLfloat;
-class GLuint;
+#include <glad/glad.h>
 
 class Mesh 
 {
+	
+public:
 	GLuint VAO;
 	GLuint VBO;
-public:
+
 	Mesh();
 	void generate();
 	void bind(static const GLfloat* vertex_buffer_data);
