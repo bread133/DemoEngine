@@ -4,6 +4,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <gl/GL.h>
+#include <glm/vec4.hpp>
 
 // Window dimensions
 const int WIDTH = 1080, HEIGHT = 720;
