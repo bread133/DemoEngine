@@ -18,5 +18,6 @@ cmake ..
 ```
 
 3. If you want to compile file, execute next line for example:
-```cmake --build . --config RELEASE
+```
+cmake --build . --config RELEASE
 ```
