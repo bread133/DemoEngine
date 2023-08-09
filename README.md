@@ -12,10 +12,11 @@ I try to cover with tests my code, but i don't sure...
 1. Install CMake on your PC
 2. Next open command line and input next line in project's repository:
 
-<code>mkdir build</code>
-
-<code>cmake ..</code>
+'''mkdir build
+cmake ..
+'''
 
 3. If you want to compile file, execute next line for example:
 
-<code>cmake --build . --config RELEASE</code>
+'''cmake --build . --config RELEASE
+'''
