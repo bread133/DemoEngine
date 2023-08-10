@@ -113,6 +113,18 @@ int Shader::load_shaders(const char* vertex_file_path, const char* fragment_file
 
 	return ProgramID;
 }
+// Получить хэндл переменной в шейдере
+GLuint Shader::get_uniform_location(glm::mat4 MVP)
+{
+	GLuint matrix_id = glGetUniformLocation(id, "MVP");
+	return matrix_id;
+}
+// Передать наши трансформации в текущий шейдер
+// Это делается в основном цикле, поскольку каждая модель будет иметь другую MVP-матрицу (как минимум часть M)
+void Shader::get_uniform_matrix(GLuint matrix_id, glm::mat4 MVP)
+{
+	glUniformMatrix4fv(matrix_id, 1, GL_FALSE, &MVP[0][0]);
+}
 
 Shader* load(const char* vertex_file_path, const char* fragment_file_path)
 {
