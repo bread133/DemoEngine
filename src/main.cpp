@@ -1,5 +1,6 @@
 #include "Render/Window.h"
 #include "Render/Graphic/Shader.h"
+#include "Render/Graphic/VAO.h"
 
 #include <iostream>
 #include <glad/glad.h>
@@ -110,10 +111,8 @@ int main()
     Window::initialize(WIDTH, HEIGHT, "Demo");
     Window::colored(0.1f, 0.0f, 1.0f, 0.7f);
 
-    GLuint VAO, VBO, CLR;
-
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    GLuint VBO, CLR;
+    VAO* vao = new VAO();
 
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -162,7 +161,7 @@ int main()
         shader->get_uniform_matrix(matrix_id, MVP);
         shader->use();
 
-        glBindVertexArray(VAO);
+        vao->Bind();
         glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
 
         Window::swap_buffers();
@@ -170,7 +169,7 @@ int main()
     }
 
     glDeleteBuffers(1, &VBO);
-    glDeleteVertexArrays(1, &VAO);
+    delete vao;
     delete shader;
     Window::terminate();
     return 0;

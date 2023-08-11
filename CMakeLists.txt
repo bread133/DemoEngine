@@ -10,8 +10,8 @@ src/Render/Window.cpp
 src/Render/Window.h
 src/Render/Graphic/Shader.cpp
 src/Render/Graphic/Shader.h
-src/Render/Graphic/Mesh.cpp
-src/Render/Graphic/Mesh.h
+src/Render/Graphic/VAO.cpp
+src/Render/Graphic/VAO.h
 src/Events/Events.cpp
 src/Events/Events.h)
 
