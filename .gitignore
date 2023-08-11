@@ -1,5 +1,3 @@
 .gitignore
 build/ 
 .vs
-/src/Events/Events.cpp
-/src/Events/Events.h
