@@ -1,6 +1,9 @@
-#version 330 core
-
+#version 460
+// Интерполированные значения из вершинного шейдера
+in vec3 fragment_color;
+// Выходные данные
 out vec3 color;
+
 void main(){
-  color = vec3(1,0,0);
+    color = fragment_color;
 }

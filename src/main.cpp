@@ -97,7 +97,7 @@ int main()
     glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
     // Или, для ортокамеры
     glm::mat4 View = glm::lookAt(
-        glm::vec3(4, 3, 3), // Камера находится в мировых координатах (4,3,3)
+        glm::vec3(4, -3, -3), // Камера находится в мировых координатах (4,3,3)
         glm::vec3(0, 0, 0), // И направлена в начало координат
         glm::vec3(0, 1, 0)  // "Голова" находится сверху
     );
@@ -108,49 +108,69 @@ int main()
     glm::mat4 MVP = Projection * View * Model; // Помните, что умножение матрицы производиться в обратном порядке
 
     Window::initialize(WIDTH, HEIGHT, "Demo");
-    Window::colored(0.5f, 0.0f, 1.0f, 1.0f);
+    Window::colored(0.1f, 0.0f, 1.0f, 0.7f);
 
-    GLuint VAO, VBO;
+    GLuint VAO, VBO, CLR;
 
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
     glBindVertexArray(VAO);
+
+    glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), 
         g_vertex_buffer_data, GL_STATIC_DRAW);
+
+    // цвет
+    glGenBuffers(1, &CLR);
+    glBindBuffer(GL_ARRAY_BUFFER, CLR);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), 
+        g_color_buffer_data, GL_STATIC_DRAW);
     
     Shader* shader = load("C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/triangle.glslv", 
         "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/triangle.glslf");
 
+    // вершины
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+    // цвет
+    // Второй буфер атрибутов - цвета
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, CLR);
+    glVertexAttribPointer(
+        1,                                // Атрибут. Здесь необязательно указывать 1, но главное, чтобы это значение совпадало с layout в шейдере..
+        3,                                // Размер
+        GL_FLOAT,                         // Тип
+        GL_FALSE,                         // Нормализован?
+        0,                                // Шаг
+        (void*)0                          // Смещение
+    );
+
     GLuint matrix_id = shader->get_uniform_location(MVP);
-    // Game loop
+
+    // Включить тест глубины
+    glEnable(GL_DEPTH_TEST);
+    // Фрагмент будет выводиться только в том, случае, если он находится ближе к камере, чем предыдущий
+    glDepthFunc(GL_LESS);
+
+    // Игровой цикл
     while (!Window::window_is_closed())
     {
-        Window::poll_events();
         Window::clear();
-
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glVertexAttribPointer(
-            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void*)0            // array buffer offset
-        );
 
         shader->get_uniform_matrix(matrix_id, MVP);
         shader->use();
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
-        glBindVertexArray(0);
 
         Window::swap_buffers();
+        Window::poll_events();
     }
 
+    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &VAO);
     delete shader;
     Window::terminate();
     return 0;
