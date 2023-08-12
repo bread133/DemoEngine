@@ -2,16 +2,16 @@
 #include <glad/glad.h>
 #include <vector>
 
-class VAO
+class Mesh
 {
 	GLuint vao;
 	std::vector<GLfloat> buffers;
 public:
-	VAO();
-	~VAO();
+	Mesh();
+	~Mesh();
 	void bind();
 	void load_buffer(int layout, const std::vector<GLfloat>& vertex_buffer_data);
 	void depth_mode();
 	void draw(int count);
-	VAO(const VAO& other) = delete;
+	Mesh(const Mesh& other) = delete;
 };

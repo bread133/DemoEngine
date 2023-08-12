@@ -1,25 +1,25 @@
-#include "VAO.h"
+#include "Mesh.h"
 
 #include<GLFW/glfw3.h>
 #include<glad/glad.h>
 
-VAO::VAO()
+Mesh::Mesh()
 {
 	glGenVertexArrays(1, &vao);
 	bind();
 }
 
-VAO::~VAO()
+Mesh::~Mesh()
 {
 	glDeleteVertexArrays(1, &vao);
 }
 
-void VAO::bind()
+void Mesh::bind()
 {
 	glBindVertexArray(vao);
 }
 
-void VAO::load_buffer(int layout, const std::vector<GLfloat>& vertex_buffer_data)
+void Mesh::load_buffer(int layout, const std::vector<GLfloat>& vertex_buffer_data)
 {
     GLuint vbo;
     glGenBuffers(1, &vbo);
@@ -40,7 +40,7 @@ void VAO::load_buffer(int layout, const std::vector<GLfloat>& vertex_buffer_data
     buffers.push_back(vbo);
 }
 
-void VAO::depth_mode()
+void Mesh::depth_mode()
 {
     // ¬ключить тест глубины
     glEnable(GL_DEPTH_TEST);
@@ -48,7 +48,7 @@ void VAO::depth_mode()
     glDepthFunc(GL_LESS);
 }
 
-void VAO::draw(int count)
+void Mesh::draw(int count)
 {
 	glDrawArrays(GL_TRIANGLES, 0, count);
 }

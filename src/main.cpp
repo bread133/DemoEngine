@@ -1,7 +1,6 @@
 #include "Render/Window.h"
 #include "Render/Graphic/Shader.h"
-#include "Render/Graphic/VAO.h"
-#include "Render/Graphic/VBO.h"
+#include "Render/Graphic/Mesh.h"
 
 #include <iostream>
 #include <glad/glad.h>
@@ -32,8 +31,8 @@ int main()
     Window::initialize(WIDTH, HEIGHT, "Demo");
     Window::colored(0.1f, 0.0f, 1.0f, 0.7f);
 
-    VAO* vao = new VAO();
-    vao->load_buffer(0, 
+    Mesh* mesh = new Mesh();
+    mesh->load_buffer(0, 
         {
             -1.0f,-1.0f,-1.0f, // Треугольник 1 : начало
             -1.0f,-1.0f, 1.0f,
@@ -73,7 +72,7 @@ int main()
             1.0f,-1.0f, 1.0f
         });
 
-    vao->load_buffer(1, 
+    mesh->load_buffer(1, 
         {
             0.583f,  0.771f,  0.014f,
             0.609f,  0.115f,  0.436f,
@@ -117,7 +116,7 @@ int main()
         "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/triangle.glslf");
 
     GLuint matrix_id = shader->get_uniform_location(MVP);
-    vao->depth_mode();
+    mesh->depth_mode();
 
     // Игровой цикл
     while (!Window::window_is_closed())
@@ -127,14 +126,14 @@ int main()
         shader->get_uniform_matrix(matrix_id, MVP);
         shader->use();
 
-        vao->bind();
-        vao->draw(12 * 3);
+        mesh->bind();
+        mesh->draw(12 * 3);
 
         Window::swap_buffers();
         Window::poll_events();
     }
 
-    delete vao;
+    delete mesh;
     delete shader;
     Window::terminate();
     return 0;
