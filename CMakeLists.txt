@@ -12,6 +12,8 @@ src/Render/Graphic/Shader.cpp
 src/Render/Graphic/Shader.h
 src/Render/Graphic/VAO.cpp
 src/Render/Graphic/VAO.h
+src/Render/Graphic/VBO.cpp
+src/Render/Graphic/VBO.h
 src/Events/Events.cpp
 src/Events/Events.h)
 
