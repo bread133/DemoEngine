@@ -1,6 +1,7 @@
 #include "Render/Window.h"
 #include "Render/Graphic/Shader.h"
 #include "Render/Graphic/Mesh.h"
+#include "Render/Graphic/Camera.h"
 
 #include <iostream>
 #include <glad/glad.h>
@@ -15,18 +16,17 @@ const int WIDTH = 1080, HEIGHT = 720;
 int main()
 {
     // Проекционная матрица : 45&deg; поле обзора, 4:3 соотношение сторон, диапазон : 0.1 юнит <-> 100 юнитов
-    glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
     // Или, для ортокамеры
-    glm::mat4 View = glm::lookAt(
-        glm::vec3(4, 3, -3), // Камера находится в мировых координатах (4,3,3)
+    glm::mat4 view = glm::lookAt(
+        glm::vec3(4, 3, 3), // Камера находится в мировых координатах (4,3,3)
         glm::vec3(0, 0, 0), // И направлена в начало координат
         glm::vec3(0, 1, 0)  // "Голова" находится сверху
     );
-
     // Матрица модели : единичная матрица (Модель находится в начале координат)
-    glm::mat4 Model = glm::mat4(1.0f);  // Индивидуально для каждой модели
+    glm::mat4 model = glm::mat4(1.0f);  // Индивидуально для каждой модели
     // Итоговая матрица ModelViewProjection, которая является результатом перемножения наших трех матриц
-    glm::mat4 MVP = Projection * View * Model; // Помните, что умножение матрицы производиться в обратном порядке
+    glm::mat4 MVP = projection * view * model; // Помните, что умножение матрицы производиться в обратном порядке
 
     Window::initialize(WIDTH, HEIGHT, "Demo");
     Window::colored(0.1f, 0.0f, 1.0f, 0.7f);
@@ -112,8 +112,8 @@ int main()
             0.982f,  0.099f,  0.879f
         });
     
-    Shader* shader = load("C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/triangle.glslv", 
-        "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/triangle.glslf");
+    Shader* shader = load("C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/Shaders/cube.glslv", 
+        "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/Shaders/cube.glslf");
 
     GLuint matrix_id = shader->get_uniform_location(MVP);
     mesh->depth_mode();
@@ -122,6 +122,7 @@ int main()
     while (!Window::window_is_closed())
     {
         Window::clear();
+        Camera::get_mouse_position();
 
         shader->get_uniform_matrix(matrix_id, MVP);
         shader->use();
