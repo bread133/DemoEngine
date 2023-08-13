@@ -1,8 +1,5 @@
 #include "Mesh.h"
 
-#include<GLFW/glfw3.h>
-#include<glad/glad.h>
-
 Mesh::Mesh()
 {
 	glGenVertexArrays(1, &vao);
