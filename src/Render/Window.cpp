@@ -63,3 +63,9 @@ void Window::poll_events()
 {
     glfwPollEvents();
 }
+
+float Window::get_delta_time(float &last)
+{
+    float result = (float)(glfwGetTime() - last);
+    last = result;
+}
