@@ -3,6 +3,7 @@
 #include<GLFW/glfw3.h>
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include "../Window.h"
 
@@ -14,13 +15,14 @@ class Camera
 	float initial_fov;		// ןמכו מבחמנא
 	float speed;
 	float mouse_speed;
-	glm::mat4 MVP;
+
+	glm::vec3 get_direction();
+	glm::vec3 get_right();
+	glm::vec3 get_up();
+	void get_mouse_position(Window* window, float delta_time);
 public:
 	Camera();
 	~Camera();
-	static void get_mouse_position();
 	glm::mat4 get_MVP();
-	void compute_angles();
-	glm::vec3 get_direction();
-	void input();
+	void input(Window* window, float delta_time);
 };

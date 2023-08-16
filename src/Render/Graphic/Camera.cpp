@@ -1,20 +1,96 @@
 #include "Camera.h"
 
-glm::vec3 position = glm::vec3(0, 0, 5);
-float horizontalAngle = 3.14f;
-float verticalAngle = 0.0f;
-
 Camera::Camera()
 {
-	float initialFoV = 45.0f;
-	float speed = 3.0f; // 3 units / second
-	float mouseSpeed = 0.005f;
+	position = glm::vec3(0, 0, 5);
+	horizontal_angle = 3.14f;
+	vertical_angle = 0.0f;
+	initial_fov = 45.0f;
+	speed = 0.01f; // units / second
+	mouse_speed = 0.0005f;
 }
 
-void Camera::get_mouse_position()
+Camera::~Camera()
 {
+}
+
+void Camera::get_mouse_position(Window* window, float delta_time)
+{
+	int width, heigth;
+	glfwGetWindowSize(window->window, &width, &heigth);
+
 	double xpos, ypos;
-	glfwGetCursorPos(Window::window, &xpos, &ypos);
-	std::cout << xpos << '\t' << ypos << std::endl;
+	glfwGetCursorPos(window->window, &xpos, &ypos);
+	// std::cout << xpos << '\t' << ypos << std::endl;
+	// Сбросить позицию мыши для следующего кадра
+	glfwSetCursorPos(window->window, width / 2, heigth / 2);
+	horizontal_angle += mouse_speed * delta_time * float(width / 2 - xpos);
+	vertical_angle += mouse_speed * delta_time * float(heigth / 2 - ypos);
+}
+
+glm::mat4 Camera::get_MVP()
+{
+	// Проекционная матрица: Поле обзора = FoV, отношение сторон 4 к 3, плоскости отсечения 0.1 и 100 юнитов
+	glm::mat4 projection = glm::perspective(glm::radians(initial_fov), 
+		4.0f / 3.0f, 0.1f, 100.0f);
+	// Матрица камеры
+	glm::mat4 view = glm::lookAt(
+		position,					// Позиция камеры
+		position + get_direction(),	// Направление камеры
+		get_up()					// Вектор "Вверх" камеры
+	);
+	glm::mat4 model = glm::mat4(1.0);
+	return projection * view * model;
+}
+
+glm::vec3 Camera::get_direction()
+{
+	// Направление
+	return glm::vec3(
+		cos(vertical_angle) * sin(horizontal_angle),
+		sin(vertical_angle),
+		cos(vertical_angle) * cos(horizontal_angle)
+	);
+}
+
+glm::vec3 Camera::get_right()
+{
+	// Вектор, указывающий направление вправо от камеры
+	return glm::vec3(
+		sin(horizontal_angle - 3.14f / 2.0f),
+		0,
+		cos(horizontal_angle - 3.14f / 2.0f)
+	);
+}
+
+glm::vec3 Camera::get_up()
+{
+	return glm::vec3(glm::cross(get_right(), get_direction()));
+}
+
+void Camera::input(Window* window, float delta_time)
+{
+	// Движение вперед
+	if (glfwGetKey(window->window, GLFW_KEY_W) == GLFW_PRESS) {
+		position += get_direction() * delta_time * speed;
+		std::cout << "W is pressed" << std::endl;
+	}
+	// Движение назад
+	if (glfwGetKey(window->window, GLFW_KEY_S) == GLFW_PRESS) {
+		position -= get_direction() * delta_time * speed;
+		std::cout << "S is pressed" << std::endl;
+	}
+	// Стрэйф вправо
+	if (glfwGetKey(window->window, GLFW_KEY_D) == GLFW_PRESS) {
+		std::cout << "D is pressed" << std::endl;
+		position += get_right() * delta_time * speed;
+	}
+	// Стрэйф влево
+	if (glfwGetKey(window->window, GLFW_KEY_A) == GLFW_PRESS) {
+		std::cout << "A is pressed" << std::endl;
+		position -= get_right() * delta_time * speed;
+	}
+	
+	get_mouse_position(window, delta_time);
 }
 

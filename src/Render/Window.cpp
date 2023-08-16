@@ -1,7 +1,5 @@
 #include "window.h"
 
-GLFWwindow* Window::window;
-
 int Window::initialize(int width, int height, const char* title)
 {
     setlocale(LC_ALL, "");
@@ -68,4 +66,5 @@ float Window::get_delta_time(float &last)
 {
     float result = (float)(glfwGetTime() - last);
     last = result;
+    return result;
 }

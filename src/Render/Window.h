@@ -6,14 +6,14 @@
 class Window
 {
 public:
-	static GLFWwindow* window;
+    GLFWwindow* window;
 
-	static int initialize(int width, int height, const char* title);
-	static void terminate();
-	static void colored(float red, float green, float blue, float alpha);
-	static void swap_buffers();
-	static void clear();
-	static bool window_is_closed();
-	static void poll_events();
+	int initialize(int width, int height, const char* title);
+	void terminate();
+	void colored(float red, float green, float blue, float alpha);
+	void swap_buffers();
+	void clear();
+	bool window_is_closed();
+	void poll_events();
 	static float get_delta_time(float &last);
 };

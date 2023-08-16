@@ -28,8 +28,9 @@ int main()
     // Итоговая матрица ModelViewProjection, которая является результатом перемножения наших трех матриц
     glm::mat4 MVP = projection * view * model; // Помните, что умножение матрицы производиться в обратном порядке
 
-    Window::initialize(WIDTH, HEIGHT, "Demo");
-    Window::colored(0.1f, 0.0f, 1.0f, 0.7f);
+    Window* window = new Window();
+    window->initialize(WIDTH, HEIGHT, "Demo");
+    window->colored(0.1f, 0.0f, 1.0f, 0.7f);
 
     Mesh* mesh = new Mesh();
     mesh->load_buffer(0, 
@@ -118,11 +119,13 @@ int main()
     GLuint matrix_id = shader->get_uniform_location(MVP);
     mesh->depth_mode();
 
+    Camera* camera = new Camera();
+
     // Игровой цикл
-    while (!Window::window_is_closed())
+    float last_delta_time = 0;
+    while (!window->window_is_closed())
     {
-        Window::clear();
-        Camera::get_mouse_position();
+        window->clear();
 
         shader->get_uniform_matrix(matrix_id, MVP);
         shader->use();
@@ -130,12 +133,27 @@ int main()
         mesh->bind();
         mesh->draw(12 * 3);
 
-        Window::swap_buffers();
-        Window::poll_events();
+        window->swap_buffers();
+        window->poll_events();
+
+        float delta_time = Window::get_delta_time(last_delta_time);
+        camera->input(window, delta_time);
+
+        // Выход из программы, оформить в класс window, но как сделать break?
+        // Хотя эта кнопка нужна будет для вызова меню, если я сделаю
+        if (glfwGetKey(window->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+            std::cout << "ESC is pressed" << std::endl;
+            break;
+        }
+
+        MVP = camera->get_MVP();
     }
 
+    delete camera;
     delete mesh;
     delete shader;
-    Window::terminate();
+    window->terminate();
+    delete window;
+
     return 0;
 }
