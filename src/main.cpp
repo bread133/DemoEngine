@@ -118,6 +118,7 @@ int main()
 
     GLuint matrix_id = shader->get_uniform_location(MVP);
     mesh->depth_mode();
+    mesh->cut_mode();
 
     Camera* camera = new Camera();
 

@@ -45,6 +45,12 @@ void Mesh::depth_mode()
     glDepthFunc(GL_LESS);
 }
 
+void Mesh::cut_mode()
+{
+    // Отсечение тех треугольников, нормаль которых направлена от камеры
+    glEnable(GL_CULL_FACE);
+}
+
 void Mesh::draw(int count)
 {
 	glDrawArrays(GL_TRIANGLES, 0, count);
