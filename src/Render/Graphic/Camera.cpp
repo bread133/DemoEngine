@@ -71,24 +71,32 @@ glm::vec3 Camera::get_up()
 void Camera::input(Window* window, float delta_time)
 {
 	// Движение вперед
-	if (glfwGetKey(window->window, GLFW_KEY_W) == GLFW_PRESS) {
+	if (glfwGetKey(window->window, GLFW_KEY_W) == GLFW_PRESS ||
+		glfwGetKey(window->window, GLFW_KEY_UP) == GLFW_PRESS) {
 		position += get_direction() * delta_time * speed;
+		position.y = 0;
 		std::cout << "W is pressed" << std::endl;
 	}
 	// Движение назад
-	if (glfwGetKey(window->window, GLFW_KEY_S) == GLFW_PRESS) {
+	if (glfwGetKey(window->window, GLFW_KEY_S) == GLFW_PRESS ||
+		glfwGetKey(window->window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 		position -= get_direction() * delta_time * speed;
+		position.y = 0;
 		std::cout << "S is pressed" << std::endl;
 	}
 	// Стрэйф вправо
-	if (glfwGetKey(window->window, GLFW_KEY_D) == GLFW_PRESS) {
+	if (glfwGetKey(window->window, GLFW_KEY_D) == GLFW_PRESS ||
+		glfwGetKey(window->window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		std::cout << "D is pressed" << std::endl;
 		position += get_right() * delta_time * speed;
+		position.y = 0;
 	}
 	// Стрэйф влево
-	if (glfwGetKey(window->window, GLFW_KEY_A) == GLFW_PRESS) {
+	if (glfwGetKey(window->window, GLFW_KEY_A) == GLFW_PRESS ||
+		glfwGetKey(window->window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		std::cout << "A is pressed" << std::endl;
 		position -= get_right() * delta_time * speed;
+		position.y = 0;
 	}
 	
 	get_mouse_position(window, delta_time);
