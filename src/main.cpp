@@ -113,8 +113,8 @@ int main()
             0.982f,  0.099f,  0.879f
         });
     
-    Shader* shader = load("C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/Shaders/cube.glslv", 
-        "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Templates/Shaders/cube.glslf");
+    Shader* shader = load("C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/cube.glslv", 
+        "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/cube.glslf");
 
     GLuint matrix_id = shader->get_uniform_location(MVP);
     mesh->depth_mode();
