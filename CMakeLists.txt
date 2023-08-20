@@ -29,3 +29,4 @@ add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} PUBLIC glad)
 
 include_directories(external/glm)
+include_directories(external/stb)
