@@ -12,8 +12,8 @@ public:
 	~Mesh();
 	void bind();
 	void load_buffer(int layout, const std::vector<GLfloat>& vertex_buffer_data);
-	void depth_mode();
-	void cut_mode();
+	static void depth_mode();
+	static void cut_mode();
 	void draw(int count);
 
 	Mesh(const Mesh& other) = delete;
