@@ -15,19 +15,6 @@ const int WIDTH = 1080, HEIGHT = 720;
 
 int main()
 {
-    // Проекционная матрица : 45&deg; поле обзора, 4:3 соотношение сторон, диапазон : 0.1 юнит <-> 100 юнитов
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-    // Или, для ортокамеры
-    glm::mat4 view = glm::lookAt(
-        glm::vec3(4, 3, 3), // Камера находится в мировых координатах (4,3,3)
-        glm::vec3(0, 0, 0), // И направлена в начало координат
-        glm::vec3(0, 1, 0)  // "Голова" находится сверху
-    );
-    // Матрица модели : единичная матрица (Модель находится в начале координат)
-    glm::mat4 model = glm::mat4(1.0f);  // Индивидуально для каждой модели
-    // Итоговая матрица ModelViewProjection, которая является результатом перемножения наших трех матриц
-    glm::mat4 MVP = projection * view * model; // Помните, что умножение матрицы производиться в обратном порядке
-
     Window* window = new Window();
     window->initialize(WIDTH, HEIGHT, "Demo");
     window->colored(0.1f, 0.0f, 1.0f, 0.7f);
@@ -116,11 +103,11 @@ int main()
     Shader* shader = load("C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/cube.glslv", 
         "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/cube.glslf");
 
-    GLuint matrix_id = shader->get_uniform_location(MVP);
-    mesh->depth_mode();
-    mesh->cut_mode();
-
     Camera* camera = new Camera();
+    glm::mat4 MVP = camera->get_MVP();
+    GLuint matrix_id = shader->get_uniform_location(MVP);
+    Mesh::depth_mode();
+    Mesh::cut_mode();
 
     // Игровой цикл
     float last_delta_time = 0;
