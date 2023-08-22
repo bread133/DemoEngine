@@ -6,8 +6,18 @@ Camera::Camera()
 	horizontal_angle = 3.14f;
 	vertical_angle = 0.0f;
 	initial_fov = 45.0f;
-	speed = 0.01f; // units / second
-	mouse_speed = 0.0005f;
+	speed = 0.003f; // units / second
+	mouse_speed = 0.001f;
+}
+
+Camera::Camera(float initial_fov, float speed, float mouse_speed, float x_pos, float y_pos, float z_pos) :
+	initial_fov(initial_fov),
+	speed(speed),
+	mouse_speed(mouse_speed)
+{
+	position = glm::vec3(x_pos, y_pos, z_pos);
+	horizontal_angle = 3.14f;
+	vertical_angle = 0.0f;
 }
 
 Camera::~Camera()

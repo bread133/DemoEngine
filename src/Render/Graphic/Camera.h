@@ -21,6 +21,7 @@ class Camera
 	void get_mouse_position(Window* window, float delta_time);
 public:
 	Camera();
+	Camera(float initial_fov, float speed, float mouse_speed, float x_pos, float y_pos, float z_pos);
 	~Camera();
 	glm::mat4 get_MVP();
 	void input(Window* window, float delta_time);
