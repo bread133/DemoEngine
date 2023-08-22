@@ -15,7 +15,8 @@ src/Render/Graphic/Mesh.h
 src/Render/Graphic/Camera.cpp
 src/Render/Graphic/Camera.h
 src/Render/Graphic/Texture.cpp
-src/Render/Graphic/Texture.h)
+src/Render/Graphic/Texture.h
+external/stb/stb_image.h)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
