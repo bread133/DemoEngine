@@ -2,13 +2,10 @@
 #include "Render/Graphic/Shader.h"
 #include "Render/Graphic/Mesh.h"
 #include "Render/Graphic/Camera.h"
+#include "Render/Graphic/Texture.h"
 
 #include <iostream>
 #include <glad/glad.h>
-#include <gl/GL.h>
-#include <glm/mat4x4.hpp>
-#include <glm/vec4.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 // Window dimensions
 const int WIDTH = 1080, HEIGHT = 720;
@@ -104,8 +101,7 @@ int main()
         "C://Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/cube.glslf");
 
     Camera* camera = new Camera();
-    glm::mat4 MVP = camera->get_MVP();
-    GLuint matrix_id = shader->get_uniform_location(MVP);
+    GLuint matrix_id = shader->get_uniform_location(camera->get_MVP());
     Mesh::depth_mode();
     Mesh::cut_mode();
 
@@ -115,7 +111,7 @@ int main()
     {
         window->clear();
 
-        shader->get_uniform_matrix(matrix_id, MVP);
+        shader->get_uniform_matrix(matrix_id, camera->get_MVP());
         shader->use();
 
         mesh->bind();
@@ -133,8 +129,6 @@ int main()
             std::cout << "ESC is pressed" << std::endl;
             break;
         }
-
-        MVP = camera->get_MVP();
     }
 
     delete camera;
