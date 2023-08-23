@@ -16,7 +16,7 @@ void Mesh::bind()
 	glBindVertexArray(vao);
 }
 
-void Mesh::load_buffer(int layout, const std::vector<GLfloat>& vertex_buffer_data)
+void Mesh::load_buffer(int layout, int size, const std::vector<GLfloat>& vertex_buffer_data)
 {
     GLuint vbo;
     glGenBuffers(1, &vbo);
@@ -29,7 +29,7 @@ void Mesh::load_buffer(int layout, const std::vector<GLfloat>& vertex_buffer_dat
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(
         layout,     // Атрибут. Здесь необязательно указывать 1, но главное, чтобы это значение совпадало с layout в шейдере..
-        3,          // Размер
+        size,          // Размер
         GL_FLOAT,   // Тип
         GL_FALSE,   // Нормализован?
         0,          // Шаг
