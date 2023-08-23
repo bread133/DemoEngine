@@ -16,4 +16,5 @@ public:
 	bool window_is_closed();
 	void poll_events();
 	static float get_delta_time(float &last);
+	bool is_exit();
 };

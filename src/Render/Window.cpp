@@ -68,3 +68,8 @@ float Window::get_delta_time(float &last)
     last = result;
     return result;
 }
+
+bool Window::is_exit()
+{
+    return glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
+}
