@@ -16,8 +16,8 @@ src/Render/Graphic/Camera.cpp
 src/Render/Graphic/Camera.h
 src/Render/Graphic/Texture.cpp
 src/Render/Graphic/Texture.h
-src/Render/Graphic/ObjLoader.cpp
-src/Render/Graphic/ObjLoader.h
+src/Render/Graphic/Model.cpp
+src/Render/Graphic/Model.h
 external/stb/stb_image.h)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
