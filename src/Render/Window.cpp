@@ -10,25 +10,26 @@ int Window::initialize(int width, int height, const char* title)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 
     window = glfwCreateWindow(width, height, title, NULL, NULL);
-    glfwMakeContextCurrent(window);
     if (window == NULL)
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        std::cout << "Ќе удалось создать GLFW окно" << std::endl;
         glfwTerminate();
         return -1;
     }
+    glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize OpenGL context" << std::endl;
+        std::cout << "Ќе удалось инициализировать GLAD-библиотеку" << std::endl;
         return -1;
     }
 
-    // Define the viewport dimensions
-    glViewport(0, 0, width, height);
     return 0;
 }
 
@@ -64,12 +65,29 @@ void Window::poll_events()
 
 float Window::get_delta_time(float &last)
 {
-    float result = (float)(glfwGetTime() - last);
-    last = result;
-    return result;
+    float current_frame = static_cast<float>(glfwGetTime());
+    float delta_time = current_frame - last;
+    last = current_frame;
+    return delta_time;
 }
 
 bool Window::is_exit()
 {
     return glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
+}
+
+void Window::set_resize()
+{
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+}
+
+void Window::depth_test()
+{
+    glEnable(GL_DEPTH_TEST);
+}
+
+// подгон изображени€ при изменении размера окна
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
 }

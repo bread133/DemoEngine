@@ -17,4 +17,8 @@ public:
 	void poll_events();
 	static float get_delta_time(float &last);
 	bool is_exit();
+	void set_resize();
+	static void depth_test();
 };
+
+extern void framebuffer_size_callback(GLFWwindow* window, int width, int height);
