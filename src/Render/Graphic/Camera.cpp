@@ -12,7 +12,6 @@ Camera::Camera(glm::vec3 position) :
     zoom(ZOOM),
     initial_fov(FOV)
 {
-    update_camera_vectors();
 }
 // constructor with scalar values
 Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov) :
@@ -26,7 +25,6 @@ Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, fl
     zoom(ZOOM),
     initial_fov(fov)
 {
-    update_camera_vectors();
 }
 
 Camera::~Camera()
