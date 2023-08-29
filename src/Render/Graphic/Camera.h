@@ -29,7 +29,6 @@ const float HORIZONTAL_ANGLE = 3.14f;
 const float VERTICAL_ANGLE = 0.0f;
 const float SPEED = 2.5f;
 const float SENSITIVITY = 0.5f;
-const float ZOOM = 45.0f;
 const float FOV = 45.0f;
 
 
@@ -49,7 +48,6 @@ class Camera
     float initial_fov;
     float speed;
     float mouse_speed;
-    float zoom;
 
     void update_camera_vectors();
     void get_mouse_position(Window* window, float delta_time);

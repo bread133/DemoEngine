@@ -9,7 +9,6 @@ Camera::Camera(glm::vec3 position) :
     horizontal_angle(HORIZONTAL_ANGLE),
     vertical_angle(VERTICAL_ANGLE),
     mouse_speed(SENSITIVITY), 
-    zoom(ZOOM),
     initial_fov(FOV)
 {
 }
@@ -22,7 +21,6 @@ Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, fl
     horizontal_angle(yaw),
     vertical_angle(pitch),
     mouse_speed(SENSITIVITY),
-    zoom(ZOOM),
     initial_fov(fov)
 {
 }
