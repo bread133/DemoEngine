@@ -14,10 +14,10 @@ src/Render/Graphic/Mesh.cpp
 src/Render/Graphic/Mesh.h
 src/Render/Graphic/Camera.cpp
 src/Render/Graphic/Camera.h
-src/Render/Graphic/Texture.cpp
-src/Render/Graphic/Texture.h
 src/Render/Graphic/Model.cpp
 src/Render/Graphic/Model.h
+src/Render/Graphic/Vertex.h
+src/Render/Graphic/Texture.h
 external/stb/stb_image.h)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -30,6 +30,9 @@ target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
 
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} PUBLIC glad)
+
+add_subdirectory(external/assimp)
+target_link_libraries(${PROJECT_NAME} PUBLIC assimp)
 
 include_directories(external/glm)
 include_directories(external/stb)
