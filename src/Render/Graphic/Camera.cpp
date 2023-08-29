@@ -1,31 +1,36 @@
 #include "Camera.h"
 
 // constructor with vectors
-Camera::Camera(glm::vec3 position) : 
-    direction(glm::vec3(0.0f, 0.0f, -1.0f)), 
-    speed(SPEED), 
+Camera::Camera(glm::vec3 position) :
+    position(glm::vec3(0.0f, 0.0f, 0.0f)),
+    direction(glm::vec3(0.0f, 0.0f, -1.0f)),
+    world_up(glm::vec3(0.0f, 1.0f, 0.0f)),
+    speed(SPEED),
+    horizontal_angle(HORIZONTAL_ANGLE),
+    vertical_angle(VERTICAL_ANGLE),
     mouse_speed(SENSITIVITY), 
     zoom(ZOOM),
     initial_fov(FOV)
 {
-    position = glm::vec3(0.0f, 0.0f, 0.0f);
-    world_up = glm::vec3(0.0f, 1.0f, 0.0f);
-    horizontal_angle = HORIZONTAL_ANGLE;
-    vertical_angle = VERTICAL_ANGLE;
-    updateCameraVectors();
+    update_camera_vectors();
 }
 // constructor with scalar values
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch, float fov) :
+Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov) :
+    position(glm::vec3(pos_x, pos_y, pos_z)),
     direction(glm::vec3(0.0f, 0.0f, -1.0f)),
+    world_up(glm::vec3(up_x, up_y, up_z)),
     speed(SPEED),
+    horizontal_angle(yaw),
+    vertical_angle(pitch),
     mouse_speed(SENSITIVITY),
     zoom(ZOOM),
     initial_fov(fov)
 {
-    position = glm::vec3(posX, posY, posZ);
-    world_up = glm::vec3(upX, upY, upZ);
-    horizontal_angle = yaw;
-    vertical_angle = pitch;
+    update_camera_vectors();
+}
+
+Camera::~Camera()
+{
 }
 
 // returns the view matrix calculated using Euler Angles and the LookAt Matrix
@@ -61,19 +66,19 @@ void Camera::process_keyboard(Camera_Movement move, float delta_time)
 }
 
 // calculates the front vector from the Camera's (updated) Euler Angles
-void Camera::updateCameraVectors()
+void Camera::update_camera_vectors()
 {
     // calculate the new Front vector
-    direction = glm::vec3(
+    direction = glm::normalize(glm::vec3(
         cos(vertical_angle) * sin(horizontal_angle),
         sin(vertical_angle),
-        cos(vertical_angle) * cos(horizontal_angle)
+        cos(vertical_angle) * cos(horizontal_angle))
     );
     // also re-calculate the Right and Up vector
-    right = glm::vec3(
+    right = glm::normalize(glm::vec3(
         sin(horizontal_angle - 3.14f / 2.0f),
         0,
-        cos(horizontal_angle - 3.14f / 2.0f)
+        cos(horizontal_angle - 3.14f / 2.0f))
     );
     // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     up = glm::normalize(glm::cross(right, direction));
@@ -91,7 +96,7 @@ void Camera::get_mouse_position(Window* window, float delta_time)
     horizontal_angle += mouse_speed * delta_time * float(width / 2 - xpos);
     vertical_angle += mouse_speed * delta_time * float(heigth / 2 - ypos);
 
-    updateCameraVectors();
+    update_camera_vectors();
 }
 
 void Camera::mvp_transformation(int WIDTH, int HEIGHT, Shader* shader)
