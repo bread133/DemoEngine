@@ -1,12 +1,4 @@
-#ifndef MESH_H
-#define MESH_H
 #include "Mesh.h"
-#include "Shader.h"
-
-#include <glad/glad.h> // holds all OpenGL type declarations
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
     // constructor
     Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures) :
@@ -106,4 +98,3 @@
         glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
         glBindVertexArray(0);
     }
-#endif
