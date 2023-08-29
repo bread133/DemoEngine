@@ -18,7 +18,11 @@ src/Render/Graphic/Model.cpp
 src/Render/Graphic/Model.h
 src/Render/Graphic/Vertex.h
 src/Render/Graphic/Texture.h
-external/stb/stb_image.h)
+external/stb/stb_image.h
+
+src/Game/Enemy.cpp
+src/Game/Enemy.h
+)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
