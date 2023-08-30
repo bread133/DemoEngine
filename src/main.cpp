@@ -3,6 +3,8 @@
 #include "Render/Graphic/Camera.h"
 #include "Render/Window.h"
 
+#include "Game/Enemy.h"
+
 // settings
 const unsigned int WIDTH = 1024;
 const unsigned int HEIGHT = 720;
@@ -24,11 +26,14 @@ int main()
     // -----------
     Model* test_model = new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/test_cube/test_cube.obj",
         false);
-    test_model->set_flip_vertically_img();
+    
 
-    // draw in wireframe
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    Model* test_model_enemy = new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/test_enemy/test_enemy.obj", 
+        false);
+    Enemy* enemy = new Enemy(test_model_enemy, 0.0f, 0.0f, 0.0f);
 
+    // Window::polygon_mode();
+    
     // timing
     float delta_time = 0.0f;
     float last_frame = 0.0f;
@@ -54,6 +59,7 @@ int main()
         camera->mvp_transformation(WIDTH, HEIGHT, shader);
 
         test_model->draw(shader);
+        enemy->draw(shader);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -64,6 +70,7 @@ int main()
 
     window->terminate();
 
+    delete enemy;
     delete camera;
     delete test_model;
     delete shader;
