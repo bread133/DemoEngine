@@ -3,6 +3,7 @@
 #include "../Render/Graphic/Shader.h"
 
 #include <glm/vec3.hpp>
+#include <vector>
 
 const float SPEED_ENEMY = 2.5f;
 const float DAMAGE = 5.0f;
