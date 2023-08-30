@@ -1,6 +1,12 @@
 #pragma once
-#include <glm/vec3.hpp>
 #include "../Render/Graphic/Model.h"
+#include "../Render/Graphic/Shader.h"
+
+#include <glm/vec3.hpp>
+
+const float SPEED_ENEMY = 2.5f;
+const float DAMAGE = 5.0f;
+const float HP = 100.0f;
 
 class Enemy
 {
@@ -10,10 +16,11 @@ class Enemy
 	float damage;
 	float hp;
 	bool alive;
-	glm::vec3 get_position();
+	void move();
 public:
-	Enemy(Model* model, glm::vec3 position, float speed);
+	Enemy(Model* model, float pos_x, float pos_y, float pos_z, float speed, float damage, float hp);
+	Enemy(Model* model, float pos_x, float pos_y, float pos_z);
 	~Enemy();
-	void draw();
+	void draw(Shader *shader);
 	bool is_dead();
 };
