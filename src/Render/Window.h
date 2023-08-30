@@ -19,6 +19,7 @@ public:
 	bool is_exit();
 	void set_resize();
 	static void depth_test();
+	static void polygon_mode();
 };
 
 extern void framebuffer_size_callback(GLFWwindow* window, int width, int height);

@@ -86,6 +86,12 @@ void Window::depth_test()
     glEnable(GL_DEPTH_TEST);
 }
 
+void Window::polygon_mode()
+{
+    // draw in wireframe
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+
 // подгон изображения при изменении размера окна
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
