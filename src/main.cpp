@@ -26,11 +26,9 @@ int main()
     // -----------
     Model* test_model = new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/test_cube/test_cube.obj",
         false);
-    
-
-    Model* test_model_enemy = new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/test_enemy/test_enemy.obj", 
+   Model* test_model_enemy = new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/test_enemy/test_enemy.obj", 
         false);
-    Enemy* enemy = new Enemy(test_model_enemy, 0.0f, 0.0f, 0.0f);
+   Enemy* enemy = new Enemy(test_model_enemy, 0.0f, 5.0f, 0.0f);
 
     // Window::polygon_mode();
     
@@ -39,7 +37,7 @@ int main()
     float last_frame = 0.0f;
 
     // camera
-    Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 6.0f));
+    Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
     // render loop
     while (!(window->window_is_closed()))
