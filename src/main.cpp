@@ -75,5 +75,6 @@ int main()
     delete test_model;
     delete shader;
     delete window;
+
     return 0;
 }
