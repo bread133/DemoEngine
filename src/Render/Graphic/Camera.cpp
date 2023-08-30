@@ -3,7 +3,6 @@
 // constructor with vectors
 Camera::Camera(glm::vec3 position) :
     position(glm::vec3(0.0f, 0.0f, 0.0f)),
-    direction(glm::vec3(0.0f, 0.0f, -1.0f)),
     world_up(glm::vec3(0.0f, 1.0f, 0.0f)),
     speed(SPEED),
     horizontal_angle(HORIZONTAL_ANGLE),
@@ -11,11 +10,11 @@ Camera::Camera(glm::vec3 position) :
     mouse_speed(SENSITIVITY), 
     initial_fov(FOV)
 {
+    update_camera_vectors();
 }
 // constructor with scalar values
 Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov) :
     position(glm::vec3(pos_x, pos_y, pos_z)),
-    direction(glm::vec3(0.0f, 0.0f, -1.0f)),
     world_up(glm::vec3(up_x, up_y, up_z)),
     speed(SPEED),
     horizontal_angle(yaw),
@@ -23,6 +22,7 @@ Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, fl
     mouse_speed(SENSITIVITY),
     initial_fov(fov)
 {
+    update_camera_vectors();
 }
 
 Camera::~Camera()
