@@ -18,6 +18,10 @@ unsigned int texture_from_file(const char* path, const std::string& directory, b
 
 class Model
 {
+    void load_model(std::string const& path);
+    void process_node(aiNode* node, const aiScene* scene);
+    Mesh process_mesh(aiMesh* mesh, const aiScene* scene);
+    std::vector<Texture> load_material_textures(aiMaterial* mat, aiTextureType type, std::string type_name);
 public:
     // model data 
     std::vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
@@ -30,11 +34,6 @@ public:
     ~Model();
     void draw(Shader*& shader);
     void set_flip_vertically_img();
-private:
-    void load_model(std::string const& path);
-    void process_node(aiNode* node, const aiScene* scene);
-    Mesh process_mesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<Texture> load_material_textures(aiMaterial* mat, aiTextureType type, std::string type_name);
 };
 
 unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma);
