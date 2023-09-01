@@ -20,6 +20,8 @@ src/Render/Graphic/Vertex.h
 src/Render/Graphic/Texture.h
 external/stb/stb_image.h
 
+src/Game/Object.cpp
+src/Game/Object.h
 src/Game/Enemy.cpp
 src/Game/Enemy.h
 )
@@ -40,3 +42,5 @@ target_link_libraries(${PROJECT_NAME} PUBLIC assimp)
 
 include_directories(external/glm)
 include_directories(external/stb)
+
+include_directories(src/Render/Resources)
