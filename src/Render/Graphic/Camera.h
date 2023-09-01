@@ -60,5 +60,5 @@ public:
     Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov);
     ~Camera();
     void input(Window* window, float delta_time);
-    void mvp_transformation(int WIDTH, int HEIGHT, Shader* shader);
+    void mvp_transformation(int WIDTH, int HEIGHT, Shader* shader, float x_translation, float y_translation, float z_translation);
 };
