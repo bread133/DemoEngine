@@ -92,6 +92,10 @@ void Camera::get_mouse_position(Window* window, float delta_time)
     horizontal_angle += mouse_speed * delta_time * float(width / 2 - xpos);
     vertical_angle += mouse_speed * delta_time * float(heigth / 2 - ypos);
 
+    if (vertical_angle > 1)
+        vertical_angle = 1;
+    if (vertical_angle < -1)
+        vertical_angle = -1;
     update_camera_vectors();
 }
 
