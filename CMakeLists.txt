@@ -16,6 +16,8 @@ src/Render/Graphic/Camera.cpp
 src/Render/Graphic/Camera.h
 src/Render/Graphic/Model.cpp
 src/Render/Graphic/Model.h
+src/Render/Graphic/Skybox.cpp
+src/Render/Graphic/Skybox.h
 src/Render/Graphic/Vertex.h
 src/Render/Graphic/Texture.h
 external/stb/stb_image.h
