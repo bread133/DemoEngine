@@ -48,17 +48,23 @@ class Camera
     float initial_fov;
     float speed;
     float mouse_speed;
+    bool is_fly;
 
     void update_camera_vectors();
     void get_mouse_position(Window* window, float delta_time);
-    glm::mat4 get_view_matrix();
     void process_keyboard(Camera_Movement direction, float deltaTime);
+    void process_keyboard_fly(Camera_Movement move, float delta_time);
+    glm::vec3 get_direction();
+    glm::vec3 get_right();
 public:
     // constructor with vectors
-    Camera(glm::vec3 position);
+    Camera(glm::vec3 position, bool is_fly);
     // constructor with scalar values
-    Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov);
+    Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov, bool is_fly);
     ~Camera();
     void input(Window* window, float delta_time);
-    void mvp_transformation(int WIDTH, int HEIGHT, Shader* shader, float x_translation, float y_translation, float z_translation);
+    void mvp_transformation(int WIDTH, int HEIGHT, Shader* shader, glm::vec3 translation);
+    glm::vec3 get_position();
+    glm::mat4 get_projection_matrix(int WIDTH, int HEIGHT);
+    glm::mat4 get_view_matrix();
 };

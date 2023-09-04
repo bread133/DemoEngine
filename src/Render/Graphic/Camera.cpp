@@ -1,26 +1,28 @@
 #include "Camera.h"
 
 // constructor with vectors
-Camera::Camera(glm::vec3 position) :
+Camera::Camera(glm::vec3 position, bool is_fly) :
     position(glm::vec3(0.0f, 0.0f, 0.0f)),
     world_up(glm::vec3(0.0f, 1.0f, 0.0f)),
     speed(SPEED),
     horizontal_angle(HORIZONTAL_ANGLE),
     vertical_angle(VERTICAL_ANGLE),
     mouse_speed(SENSITIVITY), 
-    initial_fov(FOV)
+    initial_fov(FOV),
+    is_fly(is_fly)
 {
     update_camera_vectors();
 }
 // constructor with scalar values
-Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov) :
+Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov, bool is_fly) :
     position(glm::vec3(pos_x, pos_y, pos_z)),
     world_up(glm::vec3(up_x, up_y, up_z)),
     speed(SPEED),
     horizontal_angle(yaw),
     vertical_angle(pitch),
     mouse_speed(SENSITIVITY),
-    initial_fov(fov)
+    initial_fov(fov),
+    is_fly(is_fly)
 {
     update_camera_vectors();
 }
@@ -29,10 +31,9 @@ Camera::~Camera()
 {
 }
 
-// returns the view matrix calculated using Euler Angles and the LookAt Matrix
-glm::mat4 Camera::get_view_matrix()
+glm::vec3 Camera::get_position()
 {
-    return glm::lookAt(position, position + direction, up);
+    return position;
 }
 
 // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
@@ -52,6 +53,16 @@ void Camera::process_keyboard(Camera_Movement move, float delta_time)
     case 3:
         position += right * speed * delta_time;
         break;
+    }
+    if (is_fly)
+        process_keyboard_fly(move, delta_time);
+}
+
+
+void Camera::process_keyboard_fly(Camera_Movement move, float delta_time)
+{
+    switch (move)
+    {
     case 4:
         position += world_up * speed * delta_time;
         break;
@@ -61,23 +72,31 @@ void Camera::process_keyboard(Camera_Movement move, float delta_time)
     }
 }
 
-// calculates the front vector from the Camera's (updated) Euler Angles
-void Camera::update_camera_vectors()
+
+glm::vec3 Camera::get_direction() 
 {
-    // calculate the new Front vector
-    direction = glm::normalize(glm::vec3(
+    return glm::vec3(
         cos(vertical_angle) * sin(horizontal_angle),
         sin(vertical_angle),
-        cos(vertical_angle) * cos(horizontal_angle))
+        cos(vertical_angle) * cos(horizontal_angle)
     );
-    // also re-calculate the Right and Up vector
-    right = glm::normalize(glm::vec3(
+}
+
+glm::vec3 Camera::get_right()
+{
+    return glm::vec3(
         sin(horizontal_angle - 3.14f / 2.0f),
         0,
-        cos(horizontal_angle - 3.14f / 2.0f))
+        cos(horizontal_angle - 3.14f / 2.0f)
     );
-    // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    up = glm::normalize(glm::cross(right, direction));
+}
+
+void Camera::update_camera_vectors()
+{
+    direction = get_direction();
+    right = get_right();
+
+    up = glm::cross(right, direction);
 }
 
 void Camera::get_mouse_position(Window* window, float delta_time)
@@ -99,29 +118,36 @@ void Camera::get_mouse_position(Window* window, float delta_time)
     update_camera_vectors();
 }
 
-void Camera::mvp_transformation(int WIDTH, int HEIGHT, Shader* shader, float x_translation, float y_translation, float z_translation)
+glm::mat4 Camera::get_projection_matrix(int WIDTH, int HEIGHT) 
 {
-    glm::mat4 projection = glm::perspective(glm::radians(initial_fov),
-        4.0f / 3.0f, 0.1f, 100.0f);
-   
-    glm::mat4 view = glm::lookAt(
-        position,					
-        position + direction,	
-        up					
+    return glm::perspective(glm::radians(initial_fov),
+        (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+}
+
+glm::mat4 Camera::get_view_matrix()
+{
+    return glm::lookAt(
+        position,
+        position + direction,
+        up
     );
+}
+
+void Camera::mvp_transformation(int WIDTH, int HEIGHT, Shader* shader, glm::vec3 translation)
+{
+    glm::mat4 projection = get_projection_matrix(WIDTH, HEIGHT);
+   
+    glm::mat4 view = get_view_matrix();
     
     shader->set_mat4("projection", projection);
     shader->set_mat4("view", view);
 
-    // render the loaded model
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(x_translation, y_translation, z_translation)); // translate it down so it's at the center of the scene
-    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+    model = glm::translate(model, translation); // translate it down so it's at the center of the scene
+    //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
     shader->set_mat4("model", model);
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
 void Camera::input(Window* window, float delta_time)
 {
     if (glfwGetKey(window->window, GLFW_KEY_W) == GLFW_PRESS ||
