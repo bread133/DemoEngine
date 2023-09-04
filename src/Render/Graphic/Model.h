@@ -13,7 +13,6 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-
 unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma = false);
 
 class Model
@@ -36,4 +35,7 @@ public:
     void set_flip_vertically_img();
 };
 
-unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma);
+extern unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma);
+extern unsigned int load_cubemap(std::vector<std::string> faces);
+extern void use_skybox(Shader* shader, std::vector<std::string> faces);
+extern void load_skybox(Shader* shader, std::vector<std::string> faces);
