@@ -5,10 +5,12 @@
 
 class Window
 {
+	int initialize(int width, int height, const char* title);
 public:
     GLFWwindow* window;
 
-	int initialize(int width, int height, const char* title);
+	Window(int width, int height, const char* title);
+	~Window();
 	void terminate();
 	void colored(float red, float green, float blue, float alpha);
 	void swap_buffers();

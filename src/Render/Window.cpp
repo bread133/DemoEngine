@@ -1,5 +1,15 @@
 #include "window.h"
 
+Window::Window(int width, int height, const char* title)
+{
+    initialize(width, height, title);
+}
+
+Window::~Window()
+{
+    glfwDestroyWindow(window);
+}
+
 int Window::initialize(int width, int height, const char* title)
 {
     setlocale(LC_ALL, "");
@@ -23,6 +33,7 @@ int Window::initialize(int width, int height, const char* title)
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
