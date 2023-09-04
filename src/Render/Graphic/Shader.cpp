@@ -12,7 +12,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	load(vertexPath, fragmentPath);
 }
 
-Shader::~Shader() {
+Shader::~Shader() 
+{
 	glDeleteProgram(id);
 }
 
@@ -25,6 +26,11 @@ void Shader::use()
 void Shader::set_mat4(const std::string& name, const glm::mat4& mat) const
 {
 	glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void Shader::set_int(const std::string& name, const int num) const
+{
+	glUniform1i(glGetUniformLocation(id, name.c_str()), num);
 }
 
 

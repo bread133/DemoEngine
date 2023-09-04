@@ -22,5 +22,6 @@ public:
     ~Shader();
     void use();
     void set_mat4(const std::string& name, const glm::mat4& mat) const;
+    void set_int(const std::string& name, const int num) const;
 };
 #endif
