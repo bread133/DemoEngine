@@ -63,7 +63,7 @@ public:
     Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw, float pitch, float fov, bool is_fly);
     ~Camera();
     void input(Window* window, float delta_time);
-    void mvp_transformation(int WIDTH, int HEIGHT, Shader* shader, glm::vec3 translation);
+    void mvp_transformation(Window* window, Shader* shader, glm::vec3 translation, glm::vec3 scale);
     glm::vec3 get_position();
     glm::mat4 get_projection_matrix(int WIDTH, int HEIGHT);
     glm::mat4 get_view_matrix();

@@ -101,20 +101,21 @@ void Camera::update_camera_vectors()
 
 void Camera::get_mouse_position(Window* window, float delta_time)
 {
-    int width, heigth;
-    glfwGetWindowSize(window->window, &width, &heigth);
+    int WIDTH, HEIGHT;
+    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
 
     double xpos, ypos;
     glfwGetCursorPos(window->window, &xpos, &ypos);
     
-    glfwSetCursorPos(window->window, width / 2, heigth / 2);
-    horizontal_angle += mouse_speed * delta_time * float(width / 2 - xpos);
-    vertical_angle += mouse_speed * delta_time * float(heigth / 2 - ypos);
+    glfwSetCursorPos(window->window, WIDTH / 2, HEIGHT / 2);
+    horizontal_angle += mouse_speed * delta_time * float(WIDTH / 2 - xpos);
+    vertical_angle += mouse_speed * delta_time * float(HEIGHT / 2 - ypos);
 
-    if (vertical_angle > 1)
-        vertical_angle = 1;
-    if (vertical_angle < -1)
-        vertical_angle = -1;
+    if (vertical_angle > 1.5f)
+        vertical_angle = 1.5f;
+    if (vertical_angle < -1.5f)
+        vertical_angle = -1.5f;
+
     update_camera_vectors();
 }
 
@@ -133,8 +134,11 @@ glm::mat4 Camera::get_view_matrix()
     );
 }
 
-void Camera::mvp_transformation(int WIDTH, int HEIGHT, Shader* shader, glm::vec3 translation)
+void Camera::mvp_transformation(Window* window, Shader* shader, glm::vec3 translation, glm::vec3 scale)
 {
+    int WIDTH, HEIGHT;
+    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
+
     glm::mat4 projection = get_projection_matrix(WIDTH, HEIGHT);
    
     glm::mat4 view = get_view_matrix();
