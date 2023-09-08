@@ -22,6 +22,7 @@ int main()
     //glCullFace(GL_FRONT);
     // Uses counter clock-wise standard
     //glFrontFace(GL_CCW);
+    //Window::polygon_mode();
     /*-------------------------------------------------------------*/
 
     Shader* object_shader = new Shader("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/figure_texture.glslv", 
@@ -42,19 +43,19 @@ int main()
     Skybox* skybox_cube = new Skybox(faces, skybox_shader);
     /*------------------------------------------------------------*/
 
-    Object* cube = new Object(new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/test_cube/test_cube.obj",
-        false), 0.0f, 0.0f, 0.0f);
+    Object* static_object = new Object(new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/saul_goodman/model.obj",
+        false), glm::vec3(0.0f), glm::vec3(2.0));
     object_shader->use();
-    object_shader->set_int("skybox", 0);
 
     skybox_shader->use();
     skybox_shader->set_int("skybox", 0);
 
     /*Enemy* enemy = new Enemy(new Model(
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/test_cube/test_cube.obj",
-        false), 0.0f, 20.0f, 0.0f);*/
+        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/spaceship_0/spaceship.obj",
+        false), glm::vec3(5.0f), glm::vec3(0.01f), 0.2f, 10.0f, 100.0f);*/
 
-    //Window::polygon_mode();
+    Enemy* enemy = new Enemy(new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/spaceship_1/spaceship.obj",
+        false), glm::vec3(5.0f));
 
     float delta_time = 0.0f;
     float last_frame = 0.0f;
@@ -71,10 +72,10 @@ int main()
         window->clear();
 
         object_shader->use();
-        camera->mvp_transformation(WIDTH, HEIGHT, object_shader, glm::vec3(0.0f));
-        cube->draw(object_shader);
-        //enemy->draw(shader, WIDTH, HEIGHT, camera);
-        skybox_cube->draw(skybox_shader, camera, WIDTH, HEIGHT, glm::vec3(0.0f), glm::vec3(10.0f, 10.0f, 10.0f));
+
+        static_object->draw(object_shader, window, camera);
+        enemy->draw(object_shader, window, camera, delta_time);
+        skybox_cube->draw(skybox_shader, camera, window, glm::vec3(0.0f), glm::vec3(50.0f));
 
         window->swap_buffers();
         window->poll_events();
@@ -82,12 +83,12 @@ int main()
 
     window->terminate();
 
-    std::cin.get();
+    //std::cin.get();
     //delete enemy;
     delete skybox_cube;
     delete skybox_shader;
     delete camera;
-    delete cube;
+    delete static_object;
     delete object_shader;
     delete window;
     return 0;
