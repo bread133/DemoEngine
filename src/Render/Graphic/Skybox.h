@@ -58,5 +58,5 @@ class Skybox
 public:
     Skybox(std::vector<std::string> faces, Shader* shader);
     ~Skybox();
-    void draw(Shader* shader, Camera* camera, int WIDTH, int HEIGHT, glm::vec3 translation, glm::vec3 scale);
+    void draw(Shader* shader, Camera* camera, Window* window, glm::vec3 translation, glm::vec3 scale);
 };

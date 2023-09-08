@@ -29,8 +29,11 @@ void Skybox::load(std::vector<std::string> faces, Shader* shader)
 	skybox_texture = load_cubemap(faces);
 }
 
-void Skybox::draw(Shader* shader, Camera* camera, int WIDTH, int HEIGHT, glm::vec3 translation, glm::vec3 scale)
+void Skybox::draw(Shader* shader, Camera* camera, Window* window, glm::vec3 translation, glm::vec3 scale)
 {
+    int WIDTH, HEIGHT;
+    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
+
     glDepthFunc(GL_LEQUAL);
     //glDepthMask(GL_FALSE);
     shader->use();
