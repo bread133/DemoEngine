@@ -8,9 +8,10 @@
 #include <glm/vec3.hpp>
 #include <vector>
 
-const float			SPEED_ENEMY = 0.5f;
+const float			SPEED_ENEMY = 1.5f;
 const float			DAMAGE = 5.0f;
 const int			HP = 100.0f;
+const float			DISTANCE = 3.0f;
 
 class Enemy : public Object
 {
@@ -18,11 +19,12 @@ class Enemy : public Object
 	float damage;
 	signed int hp;
 	bool alive;
+	float distance;
 	void get_position(Camera* camera, float delta_time);
 public:
-	Enemy(Model* model, float pos_x, float pos_y, float pos_z, float speed, float damage, float hp);
-	Enemy(Model* model, float pos_x, float pos_y, float pos_z);
+	Enemy(Model* model, glm::vec3 position, glm::vec3 scale, float speed, float damage, float hp, float distance);
+	Enemy(Model* model, glm::vec3 position);
 	~Enemy();
-	void draw(Shader* shader, int WIDTH, int HEIGHT, Camera* camera);
+	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
 	void is_dead();
 };
