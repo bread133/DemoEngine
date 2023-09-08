@@ -1,16 +1,16 @@
 #include "Object.h"
 
-Object::Object(Model* model, float x_position, float y_position, float z_position) :
+Object::Object(Model* model, glm::vec3 position) :
 	model(model),
-	position(glm::vec3(x_position, y_position, z_position)),
+	position(position),
 	scale(glm::vec3(1.0f, 1.0f, 1.0f))
 {
 }
 
-Object::Object(Model* model, float x_position, float y_position, float z_position, float x_scale, float y_scale, float z_scale) :
+Object::Object(Model* model, glm::vec3 position, glm::vec3 scale) :
 	model(model),
-	position(glm::vec3(x_position, y_position, z_position)),
-	scale(glm::vec3(x_scale, y_scale, z_scale))
+	position(position),
+	scale(scale)
 {
 }
 
@@ -19,7 +19,8 @@ Object::~Object()
 	delete model;
 }
 
-void Object::draw(Shader* shader)
+void Object::draw(Shader* shader, Window* window, Camera* camera)
 {
+	camera->mvp_transformation(window, shader, position, scale);
 	model->draw(shader);
 }
