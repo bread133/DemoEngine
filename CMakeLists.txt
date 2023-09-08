@@ -18,6 +18,8 @@ src/Render/Graphic/Model.cpp
 src/Render/Graphic/Model.h
 src/Render/Graphic/Skybox.cpp
 src/Render/Graphic/Skybox.h
+src/Render/Graphic/Sprite.cpp
+src/Render/Graphic/Sprite.h
 src/Render/Graphic/Vertex.h
 src/Render/Graphic/Texture.h
 external/stb/stb_image.h
@@ -26,6 +28,8 @@ src/Game/Object.cpp
 src/Game/Object.h
 src/Game/Enemy.cpp
 src/Game/Enemy.h
+src/Game/Level.cpp
+src/Game/Level.h
 )
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
