@@ -65,6 +65,7 @@ public:
     void input(Window* window, float delta_time);
     void mvp_transformation(Window* window, Shader* shader, glm::vec3 translation, glm::vec3 scale);
     glm::vec3 get_position();
-    glm::mat4 get_projection_matrix(int WIDTH, int HEIGHT);
+    glm::mat4 get_projection_matrix(Window* window);
     glm::mat4 get_view_matrix();
+    glm::mat4 get_model_matrix(glm::vec3 translation, glm::vec3 scale);
 };

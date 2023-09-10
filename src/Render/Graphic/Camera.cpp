@@ -119,8 +119,11 @@ void Camera::get_mouse_position(Window* window, float delta_time)
     update_camera_vectors();
 }
 
-glm::mat4 Camera::get_projection_matrix(int WIDTH, int HEIGHT) 
+glm::mat4 Camera::get_projection_matrix(Window* window) 
 {
+    int WIDTH, HEIGHT;
+    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
+
     return glm::perspective(glm::radians(initial_fov),
         (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 }
@@ -134,21 +137,22 @@ glm::mat4 Camera::get_view_matrix()
     );
 }
 
+glm::mat4 Camera::get_model_matrix(glm::vec3 translation, glm::vec3 scale)
+{
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, translation); // translate it down so it's at the center of the scene
+    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+    return model;
+}
+
 void Camera::mvp_transformation(Window* window, Shader* shader, glm::vec3 translation, glm::vec3 scale)
 {
-    int WIDTH, HEIGHT;
-    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
-
-    glm::mat4 projection = get_projection_matrix(WIDTH, HEIGHT);
-   
+    glm::mat4 projection = get_projection_matrix(window);
     glm::mat4 view = get_view_matrix();
+    glm::mat4 model = get_model_matrix(translation, scale);
     
     shader->set_mat4("projection", projection);
     shader->set_mat4("view", view);
-
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, translation); // translate it down so it's at the center of the scene
-    //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
     shader->set_mat4("model", model);
 }
 

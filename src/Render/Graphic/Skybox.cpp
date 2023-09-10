@@ -31,9 +31,6 @@ void Skybox::load(std::vector<std::string> faces, Shader* shader)
 
 void Skybox::draw(Shader* shader, Camera* camera, Window* window, glm::vec3 translation, glm::vec3 scale)
 {
-    int WIDTH, HEIGHT;
-    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
-
     glDepthFunc(GL_LEQUAL);
     //glDepthMask(GL_FALSE);
     shader->use();
@@ -43,7 +40,7 @@ void Skybox::draw(Shader* shader, Camera* camera, Window* window, glm::vec3 tran
     model = glm::scale(model, scale);
 
     shader->set_mat4("view", glm::mat4(glm::mat3(camera->get_view_matrix())));
-    shader->set_mat4("projection", camera->get_projection_matrix(WIDTH, HEIGHT));
+    shader->set_mat4("projection", camera->get_projection_matrix(window));
     shader->set_mat4("model", model);
     
     glBindVertexArray(vao);
