@@ -77,6 +77,8 @@ void Enemy::draw(Shader* shader, Window* window, Camera* camera, float delta_tim
 		get_position(camera, delta_time);
 		Object::draw(shader, window, camera);
 	}
+	else
+		delete this;
 }
 
 void Enemy::is_dead() 

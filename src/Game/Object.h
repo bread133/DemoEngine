@@ -4,6 +4,8 @@
 #include "../Render/Window.h"
 #include "../Render/Graphic/Camera.h"
 
+#include <vector>
+
 class Object
 {
 protected:
