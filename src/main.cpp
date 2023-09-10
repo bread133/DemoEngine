@@ -83,8 +83,8 @@ int main()
 
     window->terminate();
 
-    //std::cin.get();
-    //delete enemy;
+    std::cin.get();
+    delete enemy;
     delete skybox_cube;
     delete skybox_shader;
     delete camera;
