@@ -158,7 +158,7 @@ void Camera::mvp_transformation(Window* window, Shader* shader, glm::vec3 transl
 
 void Camera::input(Window* window, float delta_time)
 {
-    if (glfwGetKey(window->window, GLFW_KEY_W) == GLFW_PRESS ||
+    /*if (glfwGetKey(window->window, GLFW_KEY_W) == GLFW_PRESS ||
         glfwGetKey(window->window, GLFW_KEY_UP) == GLFW_PRESS)
         process_keyboard(FORWARD, delta_time);
 
@@ -178,7 +178,7 @@ void Camera::input(Window* window, float delta_time)
         process_keyboard(UP, delta_time);
 
     if (glfwGetKey(window->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-        process_keyboard(DOWN, delta_time);
+        process_keyboard(DOWN, delta_time);*/
 
     get_mouse_position(window, delta_time);
 }
