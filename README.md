@@ -1,6 +1,6 @@
 # Description
 
-This will be simple little 3D engine of RPG games. Also I want to do simple editor of level - wrapper of my future engine, because I declare in subject of studying working.
+This will be simple little 3D engine of FPS games. Also I want to do simple editor of level - wrapper of my future engine, because I declare in subject of studying working.
 I don't know, what to do, but I try to do something.
 
 Language of engine - C++, and it have not reason now, I'm sorry, editor - C# (.NET 7.0). Environment of development - VS 2022 Community.
