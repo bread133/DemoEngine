@@ -1,10 +1,26 @@
 cmake_minimum_required(VERSION 3.26 FATAL_ERROR)
 set(PROJECT_NAME DemoEngine)
-set(CMAKE_CXX_STANDART 20)
+
+set(CMAKE_CXX_STANDARD 20)
 
 project(${PROJECT_NAME})
 
-add_executable(${PROJECT_NAME} 
+include_directories(.)
+
+add_library(DemoEngineLibrary
+src/Render/Window.cpp
+src/Render/Graphic/Shader.cpp
+src/Render/Graphic/Mesh.cpp
+src/Render/Graphic/Camera.cpp
+src/Render/Graphic/Model.cpp
+src/Render/Graphic/Skybox.cpp
+src/Render/Graphic/Sprite.cpp
+
+src/Game/Object.cpp
+src/Game/Enemy.cpp
+src/Game/Level.cpp)
+
+add_executable(${PROJECT_NAME}
 src/main.cpp
 src/Render/Window.cpp
 src/Render/Window.h
@@ -39,12 +55,16 @@ set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(external/glfw)
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
+target_link_libraries(DemoEngineLibrary PUBLIC glfw)
+
 
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} PUBLIC glad)
+target_link_libraries(DemoEngineLibrary PUBLIC glad)
 
 add_subdirectory(external/assimp)
 target_link_libraries(${PROJECT_NAME} PUBLIC assimp)
+target_link_libraries(DemoEngineLibrary PUBLIC assimp)
 
 include_directories(external/glm)
 include_directories(external/stb)
