@@ -84,6 +84,7 @@ int main()
     float last_frame = 0.0f;
     Camera* camera = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), true);
 
+    /*-------------------------------------------------------------*/
     while (!(window->window_is_closed()))
     {
         delta_time = Window::get_delta_time(last_frame);
@@ -104,8 +105,8 @@ int main()
         window->poll_events();
     }
 
+    /*-------------------------------------------------------------*/
     window->terminate();
-
     // std::cin.get();
 
     delete enemy;
