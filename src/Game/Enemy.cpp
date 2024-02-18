@@ -22,7 +22,6 @@ Enemy::Enemy(Model* model, glm::vec3 position) :
 
 Enemy::~Enemy()
 {
-	delete model;
 }
 
 void Enemy::get_position(Camera* camera, float delta_time)

@@ -6,12 +6,35 @@
 #include "Game/Enemy.h"
 #include "Render/Graphic/Skybox.h"
 
+#include <filesystem>
+#include <iostream>
+#include <string>
+
 // settings
-const unsigned int WIDTH = 1024;
-const unsigned int HEIGHT = 720;
+unsigned int WIDTH;
+unsigned int HEIGHT;
+
+const char* get_path_of_project(std::string file)
+{
+    std::string path_string =
+        std::filesystem::current_path().string(); // текущая папка это билд
+
+    char* cstr = new char[path_string.length() + file.length() + 5];
+    path_string.append("\\..\\");
+    path_string.append(file);
+    strcpy(cstr, path_string.c_str());
+
+    return cstr;
+}
 
 int main()
 {
+    std::cout << "Enter a width: ";
+    std::cin >> WIDTH;
+
+    std::cout << "Enter a height: ";
+    std::cin >> HEIGHT;
+
     // window initialize
     Window* window = new Window(WIDTH, HEIGHT, "Demo");
     //window->set_resize();
@@ -25,25 +48,25 @@ int main()
     //Window::polygon_mode();
     /*-------------------------------------------------------------*/
 
-    Shader* object_shader = new Shader("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/figure_texture.glslv", 
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/figure_texture.glslf");
-   Shader* skybox_shader = new Shader("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/skybox_shader.glslv",
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Shaders/skybox_shader.glslf");
+    Shader* object_shader = new Shader(get_path_of_project("src\\Render\\Resources\\Shaders\\figure_texture.glslv"),
+        get_path_of_project("src\\Render\\Resources\\Shaders\\figure_texture.glslf"));
+   Shader* skybox_shader = new Shader(get_path_of_project("src\\Render\\Resources\\Shaders\\skybox_shader.glslv"),
+       get_path_of_project("src\\Render\\Resources\\Shaders\\skybox_shader.glslf"));
 
     // skybox texture loading
     std::vector<std::string> faces
     {
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Skyboxes/Space/right.jpg",
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Skyboxes/Space/left.jpg",
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Skyboxes/Space/top.jpg",
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Skyboxes/Space/bottom.jpg",
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Skyboxes/Space/front.jpg",
-        "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Skyboxes/Space/back.jpg"
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\right.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\left.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\top.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\bottom.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\front.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\back.jpg")
     };
     Skybox* skybox_cube = new Skybox(faces, skybox_shader);
     /*------------------------------------------------------------*/
 
-    Object* static_object = new Object(new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/saul_goodman/model.obj",
+    Object* static_object = new Object(new Model(get_path_of_project("src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
         false), glm::vec3(0.0f), glm::vec3(2.0));
     object_shader->use();
 
@@ -54,7 +77,7 @@ int main()
         "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/spaceship_0/spaceship.obj",
         false), glm::vec3(5.0f), glm::vec3(0.01f), 0.2f, 10.0f, 100.0f);*/
 
-    Enemy* enemy = new Enemy(new Model("C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/spaceship_1/spaceship.obj",
+    Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
         false), glm::vec3(5.0f));
 
     float delta_time = 0.0f;
@@ -83,7 +106,8 @@ int main()
 
     window->terminate();
 
-    std::cin.get();
+    // std::cin.get();
+
     delete enemy;
     delete skybox_cube;
     delete skybox_shader;
@@ -91,5 +115,6 @@ int main()
     delete static_object;
     delete object_shader;
     delete window;
+
     return 0;
 }

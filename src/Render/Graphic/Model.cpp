@@ -10,6 +10,7 @@ Model::Model(std::string const& path, bool gamma) : gamma_correction(gamma)
 
 Model::~Model()
 {
+    delete mesh;
 }
 
 void Model::set_flip_vertically_img()

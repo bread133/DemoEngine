@@ -19,7 +19,8 @@ Skybox::Skybox(std::vector<std::string> faces, Shader* shader)
 
 Skybox::~Skybox()
 {
-    delete[] skybox_vertices;
+    // in c++20 const arrays delete authomaticlly
+    // delete[] skybox_vertices;
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
 }
