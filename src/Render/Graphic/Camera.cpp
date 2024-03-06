@@ -102,12 +102,12 @@ void Camera::update_camera_vectors()
 void Camera::get_mouse_position(Window* window, float delta_time)
 {
     int WIDTH, HEIGHT;
-    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
+    glfwGetWindowSize(window->get_window(), &WIDTH, &HEIGHT);
 
     double xpos, ypos;
-    glfwGetCursorPos(window->window, &xpos, &ypos);
+    glfwGetCursorPos(window->get_window(), &xpos, &ypos);
     
-    glfwSetCursorPos(window->window, WIDTH / 2, HEIGHT / 2);
+    glfwSetCursorPos(window->get_window(), WIDTH / 2, HEIGHT / 2);
     horizontal_angle += mouse_speed * delta_time * float(WIDTH / 2 - xpos);
     vertical_angle += mouse_speed * delta_time * float(HEIGHT / 2 - ypos);
 
@@ -122,7 +122,7 @@ void Camera::get_mouse_position(Window* window, float delta_time)
 glm::mat4 Camera::get_projection_matrix(Window* window) 
 {
     int WIDTH, HEIGHT;
-    glfwGetWindowSize(window->window, &WIDTH, &HEIGHT);
+    glfwGetWindowSize(window->get_window(), &WIDTH, &HEIGHT);
 
     return glm::perspective(glm::radians(initial_fov),
         (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
@@ -158,26 +158,26 @@ void Camera::mvp_transformation(Window* window, Shader* shader, glm::vec3 transl
 
 void Camera::input(Window* window, float delta_time)
 {
-    if (glfwGetKey(window->window, GLFW_KEY_W) == GLFW_PRESS ||
-        glfwGetKey(window->window, GLFW_KEY_UP) == GLFW_PRESS)
+    if (glfwGetKey(window->get_window(), GLFW_KEY_W) == GLFW_PRESS ||
+        glfwGetKey(window->get_window(), GLFW_KEY_UP) == GLFW_PRESS)
         process_keyboard(FORWARD, delta_time);
 
-    if (glfwGetKey(window->window, GLFW_KEY_S) == GLFW_PRESS ||
-        glfwGetKey(window->window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    if (glfwGetKey(window->get_window(), GLFW_KEY_S) == GLFW_PRESS ||
+        glfwGetKey(window->get_window(), GLFW_KEY_DOWN) == GLFW_PRESS)
         process_keyboard(BACKWARD, delta_time);
 
-    if (glfwGetKey(window->window, GLFW_KEY_A) == GLFW_PRESS ||
-        glfwGetKey(window->window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    if (glfwGetKey(window->get_window(), GLFW_KEY_A) == GLFW_PRESS ||
+        glfwGetKey(window->get_window(), GLFW_KEY_LEFT) == GLFW_PRESS)
         process_keyboard(LEFT, delta_time);
 
-    if (glfwGetKey(window->window, GLFW_KEY_D) == GLFW_PRESS ||
-        glfwGetKey(window->window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    if (glfwGetKey(window->get_window(), GLFW_KEY_D) == GLFW_PRESS ||
+        glfwGetKey(window->get_window(), GLFW_KEY_RIGHT) == GLFW_PRESS)
         process_keyboard(RIGHT, delta_time);
 
-    if (glfwGetKey(window->window, GLFW_KEY_TAB) == GLFW_PRESS)
+    if (glfwGetKey(window->get_window(), GLFW_KEY_TAB) == GLFW_PRESS)
         process_keyboard(UP, delta_time);
 
-    if (glfwGetKey(window->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    if (glfwGetKey(window->get_window(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
         process_keyboard(DOWN, delta_time);
 
     get_mouse_position(window, delta_time);

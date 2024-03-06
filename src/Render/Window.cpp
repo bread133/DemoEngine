@@ -60,6 +60,11 @@ void Window::colored(float red, float green, float blue, float alpha)
     glClearColor(red, green, blue, alpha);
 }
 
+GLFWwindow* Window::get_window()
+{
+    return this->window;
+}
+
 void Window::swap_buffers()
 {
     glfwSwapBuffers(window);

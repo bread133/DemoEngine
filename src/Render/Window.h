@@ -18,9 +18,11 @@ class Window
 	/// <param name="title">- название игры (тайтл)</param>
 	/// <returns>в случае ошибки возвращает -1, в случае удачи возвращает 0</returns>
 	int initialize(int width, int height, const char* title);
+	/// <summary>
+	/// класс окна
+	/// </summary>
+	GLFWwindow* window;
 public:
-    GLFWwindow* window;
-
 	/// <summary>
 	/// конструктор - создание окна
 	/// </summary>
@@ -46,6 +48,11 @@ public:
 	/// <param name="blue">- синий канал</param>
 	/// <param name="alpha">- прозрачность цвета</param>
 	void colored(float red, float green, float blue, float alpha);
+	/// <summary>
+	/// геттер окна
+	/// </summary>
+	/// <returns>возвращает созданный экземпл€р окна</returns>
+	GLFWwindow* get_window();
 	/// <summary>
 	/// смена кадров, работает непосредственно в цикле.
 	/// OpenGL использует двойную буферизаци€ Ц 
