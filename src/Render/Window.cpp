@@ -21,10 +21,12 @@ int Window::initialize(int width, int height, const char* title)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+// для MacOS
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
+    // вот тут создание окна
     window = glfwCreateWindow(width, height, title, NULL, NULL);
     if (window == NULL)
     {
@@ -32,9 +34,13 @@ int Window::initialize(int width, int height, const char* title)
         glfwTerminate();
         return -1;
     }
+
+    // присваивание контекста именно этому окну
     glfwMakeContextCurrent(window);
+    // курсор не выходит за пределы окна
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+    // инициализация glad-библиотеки (OpenGL с ней работает)
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Не удалось инициализировать GLAD-библиотеку" << std::endl;
@@ -99,11 +105,9 @@ void Window::depth_test()
 
 void Window::polygon_mode()
 {
-    // draw in wireframe
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
-// подгон изображения при изменении размера окна
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
