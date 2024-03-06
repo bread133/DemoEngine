@@ -7,7 +7,7 @@ Enemy::Enemy(Model* model, glm::vec3 position, glm::vec3 scale, float speed, flo
 	hp(hp),
 	distance(distance)
 {
-	alive = true;
+	is_living = true;
 }
 
 Enemy::Enemy(Model* model, glm::vec3 position) :
@@ -17,7 +17,7 @@ Enemy::Enemy(Model* model, glm::vec3 position) :
 	hp(HP),
 	distance(DISTANCE)
 {
-	alive = true;
+	is_living = true;
 }
 
 Enemy::~Enemy()
@@ -25,7 +25,7 @@ Enemy::~Enemy()
 }
 
 void Enemy::get_position(Camera* camera, float delta_time)
-{
+{ 
 	glm::vec3 goal = camera->get_position();
 	glm::vec3 diff = goal - position;
 
@@ -71,17 +71,20 @@ void Enemy::get_position(Camera* camera, float delta_time)
 
 void Enemy::draw(Shader* shader, Window* window, Camera* camera, float delta_time)
 {
-	if (alive)
+	if (is_living)
 	{
 		get_position(camera, delta_time);
 		Object::draw(shader, window, camera);
 	}
-	else
-		delete this;
+}
+
+bool Enemy::get_is_living()
+{
+	return is_living;
 }
 
 void Enemy::is_dead() 
 {
 	if (hp == 0)
-		alive = false;
+		is_living = false;
 }
