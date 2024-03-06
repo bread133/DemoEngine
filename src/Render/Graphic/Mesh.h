@@ -11,7 +11,8 @@
 #include <vector>
 #include <string>
 
-class Mesh {
+class Mesh 
+{
     unsigned int VBO, EBO;
     void setup_mesh();
 public:
