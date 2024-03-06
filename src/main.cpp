@@ -5,6 +5,7 @@
 
 #include "Game/Enemy.h"
 #include "Render/Graphic/Skybox.h"
+#include "src/Game/Level.h"
 
 #include <filesystem>
 #include <iostream>
@@ -29,6 +30,8 @@ const char* get_path_of_project(std::string file)
 
 int main()
 {
+    std::cout << get_path_of_project("src\\Render\\Resources\\Shaders\\figure_texture.glslv") << std::endl;
+
     std::cout << "Enter a width: ";
     std::cin >> WIDTH;
 
@@ -63,11 +66,16 @@ int main()
         get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\front.jpg"),
         get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\back.jpg")
     };
-    Skybox* skybox_cube = new Skybox(faces, skybox_shader);
+    // Skybox* skybox_cube = new Skybox(faces, skybox_shader);
+
+    Level* test_level = new Level("default", new Skybox(faces, skybox_shader));
     /*------------------------------------------------------------*/
 
-    Object* static_object = new Object(new Model(get_path_of_project("src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
-        false), glm::vec3(0.0f), glm::vec3(2.0));
+    // Object* static_object = new Object(new Model(get_path_of_project("src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
+    //     false), glm::vec3(0.0f), glm::vec3(2.0));
+    test_level->add_static_object(new Object(new Model(get_path_of_project(
+        "src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
+        false), glm::vec3(0.0f), glm::vec3(2.0)));
     object_shader->use();
 
     skybox_shader->use();
@@ -77,43 +85,47 @@ int main()
         "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/spaceship_0/spaceship.obj",
         false), glm::vec3(5.0f), glm::vec3(0.01f), 0.2f, 10.0f, 100.0f);*/
 
-    Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
-        false), glm::vec3(5.0f));
+    // Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
+    //     false), glm::vec3(5.0f));
+    test_level->add_enemy(new Enemy(new Model(get_path_of_project(
+        "src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
+        false), glm::vec3(5.0f)));
 
-    float delta_time = 0.0f;
-    float last_frame = 0.0f;
+    // float delta_time = 0.0f;
+    // float last_frame = 0.0f;
     Camera* camera = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), true);
 
     /*-------------------------------------------------------------*/
     while (!(window->window_is_closed()))
     {
-        delta_time = Window::get_delta_time(last_frame);
-        camera->input(window, delta_time);
+        // delta_time = Window::get_delta_time(last_frame);
+        // camera->input(window, delta_time);
+        test_level->draw(window, camera, object_shader, skybox_shader);
         if (window->is_exit())
             break;
 
-        window->colored(0.5f, 0.5f, 0.5f, 1.0f);
-        window->clear();
+        // window->colored(0.5f, 0.5f, 0.5f, 1.0f);
+        // window->clear();
 
-        object_shader->use();
+        // object_shader->use();
 
-        static_object->draw(object_shader, window, camera);
-        enemy->draw(object_shader, window, camera, delta_time);
-        skybox_cube->draw(skybox_shader, camera, window, glm::vec3(0.0f), glm::vec3(50.0f));
+        // static_object->draw(object_shader, window, camera);
+        // enemy->draw(object_shader, window, camera, delta_time);
+        // skybox_cube->draw(skybox_shader, camera, window, glm::vec3(0.0f), glm::vec3(50.0f));
 
-        window->swap_buffers();
-        window->poll_events();
+        // window->swap_buffers();
+        // window->poll_events();
     }
 
     /*-------------------------------------------------------------*/
     window->terminate();
-    // std::cin.get();
+    std::cin.get();
 
-    delete enemy;
-    delete skybox_cube;
+    // delete enemy;
+    // delete skybox_cube;
     delete skybox_shader;
     delete camera;
-    delete static_object;
+    // delete static_object;
     delete object_shader;
     delete window;
 

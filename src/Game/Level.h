@@ -4,15 +4,30 @@
 
 #include <vector>
 
+/// <summary>
+///  ласс, позвол€ющий добавить уровень в игру. 
+/// ѕредставл€ет из себ€ своеобразную обертку, пр€чет от пользовател€ генерацию шейдеров и прочее.
+/// —оздаетс€ новый экземпл€р класса, который работает внутри главного цикла в main.
+/// ѕотом будет хранитьс€ в классе Game.
+/// </summary>
 class Level
 {
-	std::vector<Model> static_objects;
-	std::vector<Enemy> enemies;
+	std::string name;
+	std::vector<Object*> static_objects;
+	std::vector<Enemy*> enemies;
 	Skybox* skybox;
-	float frame_time; // last delta time
-	float delta_time;
+	glm::vec3 size;
+	bool is_won = false;
 
-	Level(std::string faces, Shader* object_shader, Shader* skybox_shader);
+	float delta_time = 0.0f;
+	float last_frame = 0.0f;
+	void add_bullet();
+public:
+	Level(std::string name, Skybox* skybox);
 	~Level();
-	void draw(Shader* object_shader, Shader* skybox_shader);
+
+	void win();
+	void draw(Window* window, Camera* camera, Shader* object_shader, Shader* skybox_shader);
+	void add_enemy(Enemy* enemy);
+	void add_static_object(Object* object);
 };
