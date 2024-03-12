@@ -75,7 +75,7 @@ int main()
     //     false), glm::vec3(0.0f), glm::vec3(2.0));
     test_level->add_static_object(new Object(new Model(get_path_of_project(
         "src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
-        false), glm::vec3(0.0f), glm::vec3(2.0)));
+        false), glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(2.0)));
     object_shader->use();
 
     skybox_shader->use();
@@ -87,13 +87,13 @@ int main()
 
     // Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
     //     false), glm::vec3(5.0f));
-    test_level->add_enemy(new Enemy(new Model(get_path_of_project(
-        "src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
+    test_level->add_enemy(new Enemy(new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
         false), glm::vec3(5.0f)));
 
     // float delta_time = 0.0f;
     // float last_frame = 0.0f;
-    Camera* camera = new Camera(glm::vec3(0.0f, 5.0f, 5.0f), true);
+    Camera* camera = new Camera(glm::vec3(0.0f), true);
 
     /*-------------------------------------------------------------*/
     while (!(window->window_is_closed()))
