@@ -4,26 +4,44 @@
 
 #include <string>
 
-const float sprite_vertices[] = {
-    // pos
-    0.0f, 1.0f, 0.0f,
-    1.0f, 0.0f, 1.0f,
-    0.0f, 0.0f, 0.0f,
-
-    0.0f, 1.0f, 0.0f,
-    1.0f, 1.0f, 1.0f,
-    1.0f, 0.0f, 1.0f
-};
-
-class Bullet : Object
+/// <summary>
+/// класс выстрелов
+/// </summary>
+class Bullet : public Object
 {
+	glm::vec3 start_position;
+	/// <summary>
+	/// скорость выстрела.
+	/// </summary>
 	float speed;
+	/// <summary>
+	/// длина выстрела.
+	/// </summary>
 	float length;
-	bool alive;
-	Model* model;
-	void get_position();
+	/// <summary>
+	/// отображение выстрела.
+	/// </summary>
+	bool is_living;
+	void set_position(Camera* camera, float delta_time);
 public:
+	/// <summary>
+	/// конструктор.
+	/// </summary>
+	/// <param name="model">- моделька соперника</param>
+	/// <param name="position">- позиция соперника</param>
+	/// <param name="scale">- размер соперника</param>
+	/// <param name="speed">- скорость врага</param>
+	/// <param name="length">- длина выстрела</param>
 	Bullet(Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length);
+	/// <summary>
+	/// деструктор.
+	/// </summary>
 	~Bullet();
-	void draw(Shader *shader);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns>если разница между стартом и текущей точкой больше, 
+	/// то false</returns>
+	bool get_is_living();
+	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
 };
