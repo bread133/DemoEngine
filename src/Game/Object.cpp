@@ -19,7 +19,7 @@ Object::~Object()
 	delete model;
 }
 
-void Object::draw(Shader* shader, Window* window, Camera* camera)
+void Object::draw(Shader* shader, Window* window, Camera* camera, float delta_time)
 {
 	camera->mvp_transformation(window, shader, position, scale);
 	model->draw(shader);
