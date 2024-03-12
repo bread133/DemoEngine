@@ -46,7 +46,7 @@ class Enemy : public Object
 	/// </summary>
 	/// <param name="camera"></param>
 	/// <param name="delta_time"></param>
-	void get_position(Camera* camera, float delta_time);
+	void set_position(Camera* camera, float delta_time);
 	/// <summary>
 	/// мен€ет значение is_alive на false.
 	/// </summary>
@@ -74,16 +74,9 @@ public:
 	/// </summary>
 	~Enemy();
 	/// <summary>
-	/// отрисовка персонажа.
-	/// </summary>
-	/// <param name="shader">- шейдер дл€ отрисовки врага</param>
-	/// <param name="window">- экземпл€р класса окна</param>
-	/// <param name="camera">- экземпл€р класса камеры</param>
-	/// <param name="delta_time">- разница между кадрами по времени</param>
-	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
-	/// <summary>
 	/// геттер дл€ значени€, живой ли данный экземпл€р.
 	/// </summary>
 	/// <returns>если живой, то true, в обратном случае - false</returns>
 	bool get_is_living();
+	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
 };
