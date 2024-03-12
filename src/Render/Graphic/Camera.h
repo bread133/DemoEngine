@@ -55,8 +55,6 @@ class Camera
     void get_mouse_position(Window* window, float delta_time);
     void process_keyboard(Camera_Movement direction, float deltaTime);
     void process_keyboard_fly(Camera_Movement move, float delta_time);
-    glm::vec3 get_direction();
-    glm::vec3 get_right();
 public:
     // constructor with vectors
     Camera(glm::vec3 position, bool is_fly);
@@ -66,6 +64,8 @@ public:
     void input(Window* window, float delta_time);
     void mvp_transformation(Window* window, Shader* shader, glm::vec3 translation, glm::vec3 scale);
     glm::vec3 get_position();
+    glm::vec3 get_direction();
+    glm::vec3 get_right();
     glm::mat4 get_projection_matrix(Window* window);
     glm::mat4 get_view_matrix();
     glm::mat4 get_model_matrix(glm::vec3 translation, glm::vec3 scale);

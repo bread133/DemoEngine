@@ -3,3 +3,6 @@
 ################################################################################
 
 /build
+/DemoEngineGUI
+/.vs
+/src/Render/Resources/Models/golf_ball
