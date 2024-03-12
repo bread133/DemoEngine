@@ -18,7 +18,10 @@ src/Render/Graphic/Skybox.cpp
 src/Game/Bullet.cpp
 src/Game/Object.cpp
 src/Game/Enemy.cpp
-src/Game/Level.cpp)
+src/Game/Level.cpp
+
+src/Physic/Map.cpp
+)
 
 add_executable(${PROJECT_NAME}
 src/main.cpp
@@ -46,6 +49,9 @@ src/Game/Level.cpp
 src/Game/Level.h
 src/Game/Bullet.cpp
 src/Game/Bullet.h
+
+src/Physic/Map.cpp
+src/Physic/Map.h
 )
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
