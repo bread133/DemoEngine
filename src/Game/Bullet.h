@@ -7,7 +7,7 @@
 /// <summary>
 /// класс выстрелов
 /// </summary>
-class Bullet : public Object
+class Bullet final : public Object
 {
 	glm::vec3 start_position;
 	/// <summary>
@@ -33,6 +33,7 @@ public:
 	/// <param name="speed">- скорость врага</param>
 	/// <param name="length">- длина выстрела</param>
 	Bullet(Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length);
+	Bullet(Bullet* bullet);
 	/// <summary>
 	/// деструктор.
 	/// </summary>
@@ -43,5 +44,6 @@ public:
 	/// <returns>если разница между стартом и текущей точкой больше, 
 	/// то false</returns>
 	bool get_is_living();
+	void set_start_position(Camera* camera);
 	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
 };
