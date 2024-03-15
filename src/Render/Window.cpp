@@ -13,7 +13,7 @@ Window::~Window()
 int Window::initialize(int width, int height, const char* title)
 {
     setlocale(LC_ALL, "");
-    std::cout << "Запуск GLFW, версия OpenGL: 3.3" << std::endl;
+    std::cout << "start GLFW, version OpenGL: 3.3" << std::endl;
 
     glfwInit();
 
