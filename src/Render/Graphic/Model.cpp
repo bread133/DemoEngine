@@ -3,9 +3,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-Model::Model(std::string const& path, bool gamma) : gamma_correction(gamma)
+Model::Model(std::string const& path, bool gamma) : 
+    gamma_correction(gamma),
+    path(path)
 {
-    load_model(path);
 }
 
 Model::~Model()
@@ -25,7 +26,7 @@ void Model::draw(Shader*& shader)
     mesh->draw(shader);
 }
 // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-void Model::load_model(std::string const& path)
+void Model::load_model()
 {
     // read file via ASSIMP
     Assimp::Importer importer;

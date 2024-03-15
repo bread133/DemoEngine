@@ -17,7 +17,7 @@ unsigned int texture_from_file(const char* path, const std::string& directory, b
 
 class Model
 {
-    void load_model(std::string const& path);
+    std::string path;
     void process_node(aiNode* node, const aiScene* scene);
     Mesh* process_mesh(aiMesh* mesh, const aiScene* scene);
     std::vector<Texture> load_material_textures(aiMaterial* mat, aiTextureType type, std::string type_name);
@@ -33,9 +33,8 @@ public:
     ~Model();
     void draw(Shader*& shader);
     void set_flip_vertically_img();
+    void load_model();
 };
 
 extern unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma);
 extern unsigned int load_cubemap(std::vector<std::string> faces);
-extern void use_skybox(Shader* shader, std::vector<std::string> faces);
-extern void load_skybox(Shader* shader, std::vector<std::string> faces);

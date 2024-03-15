@@ -14,9 +14,16 @@ Object::Object(Model* model, glm::vec3 position, glm::vec3 scale) :
 {
 }
 
+
+
 Object::~Object()
 {
 	delete model;
+}
+
+void Object::load()
+{
+	model->load_model();
 }
 
 void Object::draw(Shader* shader, Window* window, Camera* camera, float delta_time)

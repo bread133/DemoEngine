@@ -16,5 +16,6 @@ public:
 	Object(Model* model, glm::vec3 position);
 	Object(Model* model, glm::vec3 position, glm::vec3 scale);
 	~Object();
+	void load();
 	virtual void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
 };
