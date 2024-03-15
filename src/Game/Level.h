@@ -14,24 +14,33 @@
 /// </summary>
 class Level
 {
+	Camera* camera;
 	std::string name;
 	std::vector<Object*> static_objects;
 	std::vector<Object*> enemies;
+	Bullet* bullet;
 	std::vector<Object*> bullets;
 	Skybox* skybox;
 	glm::vec3 size;
-	bool is_won = false;
+	bool is_win = false;
 
 	float delta_time = 0.0f;
 	float last_frame = 0.0f;
-	void add_bullet(Camera* camera, Window* window);
-	void draw_vector(std::vector<Object*> objects, Window* window, Camera* camera, Shader* object_shader, Shader* skybox_shader);
+	void add_bullet(Window* window);
+	void load_vector(std::vector<Object*> objects);
+	void draw_vector(std::vector<Object*> objects, Window* window, Shader* object_shader, Shader* skybox_shader);
+	void set_status(Window* window);
 public:
-	Level(std::string name, Skybox* skybox);
+	Level(std::string name, Skybox* skybox, glm::vec3 position, bool is_fly);
+	Level(std::string name, Skybox* skybox, Camera* camera);
 	~Level();
 
 	void win();
-	void draw(Window* window, Camera* camera, Shader* object_shader, Shader* skybox_shader);
+	void load();
+	void load_bullet();
+	void draw(Window* window, Shader* object_shader, Shader* skybox_shader);
 	void add_enemy(Enemy* enemy);
 	void add_static_object(Object* object);
+
+	bool get_status();
 };

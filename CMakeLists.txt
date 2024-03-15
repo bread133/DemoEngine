@@ -19,6 +19,7 @@ src/Game/Bullet.cpp
 src/Game/Object.cpp
 src/Game/Enemy.cpp
 src/Game/Level.cpp
+src/Game/Game.cpp
 
 src/Physic/Map.cpp
 )
@@ -49,6 +50,8 @@ src/Game/Level.cpp
 src/Game/Level.h
 src/Game/Bullet.cpp
 src/Game/Bullet.h
+src/Game/Game.cpp
+src/Game/Game.h
 
 src/Physic/Map.cpp
 src/Physic/Map.h
