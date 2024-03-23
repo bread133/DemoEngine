@@ -13,12 +13,12 @@ Window::~Window()
 int Window::initialize(int width, int height, const char* title)
 {
     setlocale(LC_ALL, "");
-    std::cout << "start GLFW, version OpenGL: 3.3" << std::endl;
+    std::cout << "start GLFW, version OpenGL: 4.6" << std::endl;
 
     glfwInit();
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 // для MacOS
@@ -47,6 +47,8 @@ int Window::initialize(int width, int height, const char* title)
         return -1;
     }
 
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_FALSE);
+
     return 0;
 }
 
@@ -58,6 +60,12 @@ void Window::terminate()
 void Window::colored(float red, float green, float blue, float alpha)
 {
     glClearColor(red, green, blue, alpha);
+}
+
+void Window::maximize_window() // TODO
+{
+    glfwMaximizeWindow(window);
+    set_resize();
 }
 
 GLFWwindow* Window::get_window()
@@ -83,6 +91,11 @@ bool Window::window_is_closed()
 void Window::poll_events()
 {
     glfwPollEvents();
+}
+
+void Window::poll_events_timeout(float timeout)
+{
+    glfwWaitEventsTimeout(timeout);
 }
 
 float Window::get_delta_time(float &last)

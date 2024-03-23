@@ -48,6 +48,7 @@ public:
 	/// <param name="blue">- синий канал</param>
 	/// <param name="alpha">- прозрачность цвета</param>
 	void colored(float red, float green, float blue, float alpha);
+	void maximize_window();
 	/// <summary>
 	/// геттер окна
 	/// </summary>
@@ -78,6 +79,7 @@ public:
 	/// в класс программы.
 	/// </summary>
 	void poll_events();
+	void poll_events_timeout(float timeout);
 	/// <summary>
 	/// время замены одного кадра на другой.
 	/// в зависимости от этого значения рассчитывается, 
