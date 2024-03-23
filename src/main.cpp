@@ -1,17 +1,6 @@
-#include "Render/Graphic/Shader.h"
-#include "Render/Graphic/Model.h"
-#include "Render/Graphic/Camera.h"
-#include "Render/Window.h"
-
-#include "Game/Enemy.h"
-#include "Render/Graphic/Skybox.h"
-#include "src/Game/Level.h"
-
 #include "src/Game/Game.h"
-
 #include <filesystem>
 #include <iostream>
-#include <string>
 
 // settings
 unsigned int WIDTH;
@@ -42,7 +31,7 @@ int main()
 
     // window initialize
     Window* window = new Window(WIDTH, HEIGHT, "Demo");
-    //window->set_resize();
+    // window->maximize_window();
     Window::depth_test();
     // Enables Cull Facing
     glEnable(GL_CULL_FACE);
@@ -68,6 +57,16 @@ int main()
         get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\front.jpg"),
         get_path_of_project("src\\Render\\Resources\\Skyboxes\\Space\\back.jpg")
     };
+
+    std::vector<std::string> faces_2
+    {
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Sky\\right.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Sky\\left.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Sky\\top.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Sky\\bottom.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Sky\\front.jpg"),
+        get_path_of_project("src\\Render\\Resources\\Skyboxes\\Sky\\back.jpg")
+    };
     // Skybox* skybox_cube = new Skybox(faces, skybox_shader);
 
     // float delta_time = 0.0f;
@@ -76,13 +75,32 @@ int main()
     /*------------------------------------------------------------*/
     Game* game = new Game(window, object_shader, skybox_shader);
     /*------------------------------------------------------------*/
-    Level* test_level_1 = new Level("default", new Skybox(faces, skybox_shader), camera);
+    Level* test_level_1 = new Level("default_1", new Skybox(faces, 
+        skybox_shader), camera);
+
+    Level* test_level_2 = new Level("default_2", new Skybox(faces_2,
+        skybox_shader), camera);
     
-    // Object* static_object = new Object(new Model(get_path_of_project("src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
+    // Object* static_object = new Object(new Model(get_path_of_project("src/Render/Resources/Models/saul_goodman/model.obj"),
     //     false), glm::vec3(0.0f), glm::vec3(2.0));
-    test_level_1->add_static_object(new Object(new Model(get_path_of_project(
-        "src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
-        false), glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(2.0)));
+    // test_level_1->add_static_object(new Object(new Model(get_path_of_project(
+    //     "src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
+    //     false), glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(2.0)));
+
+    // test_level_2->add_static_object(new Object(new Model(get_path_of_project(
+    //     "src\\Render\\Resources\\Models\\saul_goodman/model.obj"),
+    //     false), glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(2.0)));
+
+    // Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
+    //     false), glm::vec3(5.0f));
+    test_level_1->add_enemy(new Enemy(new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
+        false), glm::vec3(5.0f)));
+
+    // test_level_2->add_enemy(new Enemy(new Model(
+    //     "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
+    //     false), glm::vec3(5.0f)));
+
     /*object_shader->use();
 
     skybox_shader->use();
@@ -90,15 +108,11 @@ int main()
 
     /*------------------------------------------------------------*/
     game->add_level(test_level_1);
+    game->add_level(test_level_2);
     /*Enemy* enemy = new Enemy(new Model(
         "C:/Users/bread/source/repos/DemoEngineWithCMake/DemoEngine/src/Render/Resources/Models/spaceship_0/spaceship.obj",
         false), glm::vec3(5.0f), glm::vec3(0.01f), 0.2f, 10.0f, 100.0f);*/
 
-    // Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
-    //     false), glm::vec3(5.0f));
-    test_level_1->add_enemy(new Enemy(new Model(
-        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
-        false), glm::vec3(5.0f)));
     /*-------------------------------------------------------------*/
 
     //while (!(window->window_is_closed()))
