@@ -89,7 +89,7 @@ Mesh* Model::process_mesh(aiMesh* mesh, const aiScene* scene)
                 );
         }
         // texture coordinates
-        if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
+        if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates? Да
         {
             vertex.tex_coord = glm::vec2(
                 mesh->mTextureCoords[0][i].x,

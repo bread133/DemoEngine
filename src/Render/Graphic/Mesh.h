@@ -16,7 +16,7 @@ class Mesh
     unsigned int VBO, EBO;
     void setup_mesh();
 public:
-    // mesh Data
+    // данные о мешах
     std::vector<Vertex>       vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture>      textures;
@@ -24,6 +24,6 @@ public:
 
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
     ~Mesh();
-    // render the mesh
+    // отрисовка всех мешей
     void draw(Shader*& shader);
 };

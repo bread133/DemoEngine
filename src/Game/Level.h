@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <thread>
+#include <src/Physic/Map.h>
 
 /// <summary>
 ///  ласс, позвол€ющий добавить уровень в игру. 
@@ -18,6 +19,7 @@ class Level
 	std::string name;
 	std::vector<Object*> static_objects;
 	std::vector<Object*> enemies;
+	Map* map;
 	Bullet* bullet;
 	std::vector<Object*> bullets;
 	Skybox* skybox;

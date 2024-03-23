@@ -64,7 +64,7 @@ void Level::draw_vector(std::vector<Object*> objects, Window* window, Shader* ob
 
 void Level::load_vector(std::vector<Object*> objects)
 {
-    for (int i = 0; i < static_objects.size(); i++)
+    for (int i = 0; i < objects.size(); i++)
     {
         objects[i]->load();
     }
@@ -73,8 +73,11 @@ void Level::load_vector(std::vector<Object*> objects)
 // тут пока затычка, пока не реализована коллизия
 void Level::set_status(Window* window)
 {
-    if (glfwGetKey(window->get_window(), GLFW_KEY_0) == GLFW_PRESS)
+    if (glfwGetKey(window->get_window(), GLFW_KEY_0) == GLFW_PRESS) 
+    {
+        window->poll_events_timeout(1.0f);
         is_win = true;
+    }
 }
 
 void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
@@ -93,7 +96,7 @@ void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
     draw_vector(static_objects, window, object_shader, skybox_shader);
 
     // враги
-    draw_vector(enemies, window, object_shader, skybox_shader);
+    draw_vector(enemies, window, object_shader, skybox_shader); // error
 
     // выстрелы 
     // TODO: многопоточность
@@ -118,6 +121,7 @@ void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
     // инпут и смена кадров
     window->swap_buffers();
     window->poll_events();
+    // window->poll_events_timeout(0.1f); - нужно нормально имплементировать
 }
 
 void Level::add_enemy(Enemy* enemy)

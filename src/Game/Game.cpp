@@ -28,25 +28,21 @@ void Game::add_level(Level* level)
 
 void Game::next_level()
 {
-	if (levels.size() == index + 1) 
+	if (levels[index]->get_status())
+		index++;
+	// тут должен быть unload предыдущего уровня
+	if (index == levels.size()) 
 	{
 		win = true;
 		std::cout << "You are winner!" << std::endl;
 		return;
 	}
-	if (levels[index]->get_status())
-		index++;
-
-	// тут должен быть unload предыдущего уровня
 }
 
 void Game::render()
 {
-	// всякие проверки
-	if (levels.empty())
-		throw;
 	// цикл уровня с номером index
-	while (!(window->window_is_closed() || levels[index]->get_status()))
+	while (!levels[index]->get_status())
 	{
 		levels[index]->draw(window, object_shader, skybox_shader);
 		if (window->is_exit())
@@ -56,13 +52,19 @@ void Game::render()
 
 void Game::start()
 {
-	while(!win)
+	// всякие проверки
+	if (levels.empty())
+		throw;
+
+	while(!window->window_is_closed() && !win)
 	{
 		// тут должен быть init текущего уровня
 		levels[index]->load();
 		levels[index]->load_bullet();
 
 		render();
+		if (window->is_exit())
+			break;
 		next_level();
 	}
 }
