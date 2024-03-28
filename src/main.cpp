@@ -95,7 +95,11 @@ int main()
     //     false), glm::vec3(5.0f));
     test_level_1->add_enemy(new Enemy(new Model(
         "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
-        false), glm::vec3(5.0f)));
+        false), glm::vec3(0.0f, 0.0f, 5.0f)));
+
+    test_level_1->add_enemy(new Enemy(new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
+        false), glm::vec3(0.0f, 0.0f, -5.0f)));
 
     // test_level_2->add_enemy(new Enemy(new Model(
     //     "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",

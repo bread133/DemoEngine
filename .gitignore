@@ -6,3 +6,7 @@
 /DemoEngineGUI
 /.vs
 /src/Render/Resources/
+/src/Physic/AABB.cpp
+/src/Physic/AABB.h
+/src/Phisic/Collision.cpp
+/src/Phisic/Collision.h

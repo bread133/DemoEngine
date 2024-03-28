@@ -11,10 +11,6 @@ class Bullet final : public Object
 {
 	glm::vec3 start_position;
 	/// <summary>
-	/// скорость выстрела.
-	/// </summary>
-	float speed;
-	/// <summary>
 	/// длина выстрела.
 	/// </summary>
 	float length;
@@ -45,5 +41,6 @@ public:
 	/// то false</returns>
 	bool get_is_living();
 	void set_start_position(Camera* camera);
+	void load();
 	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
 };

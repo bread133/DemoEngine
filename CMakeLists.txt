@@ -22,6 +22,7 @@ src/Game/Level.cpp
 src/Game/Game.cpp
 
 src/Physic/Map.cpp
+src/Physic/Collision.cpp
 )
 
 add_executable(${PROJECT_NAME}
@@ -55,6 +56,8 @@ src/Game/Game.h
 
 src/Physic/Map.cpp
 src/Physic/Map.h
+src/Physic/Collider.cpp
+src/Physic/Collider.h
 )
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

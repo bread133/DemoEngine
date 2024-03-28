@@ -8,20 +8,16 @@
 #include <glm/vec3.hpp>
 #include <vector>
 
-const float			SPEED_ENEMY = 1.5f;
+const float			SPEED_ENEMY = 0.5f;
 const float			DAMAGE = 5.0f;
 const int			HP = 100.0f;
-const float			DISTANCE = 3.0f;
+const glm::vec3		DISTANCE = glm::vec3(3.0f);
 
 /// <summary>
 /// класс соперника.
 /// </summary>
 class Enemy : public Object
 {
-	/// <summary>
-	/// скорость врага.
-	/// </summary>
-	float speed;
 	/// <summary>
 	/// урон, наносимый игроку.
 	/// </summary>
@@ -38,7 +34,7 @@ class Enemy : public Object
 	/// дистанция между врагом и игроком, 
 	/// которая необходима в методе get_position().
 	/// </summary>
-	float distance;
+	glm::vec3 distance;
 	/// <summary>
 	/// смена позиции.
 	/// вот тут прописывается ии врага, по идее.

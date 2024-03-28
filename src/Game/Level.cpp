@@ -5,6 +5,15 @@ Level::Level(std::string name, Skybox* skybox, glm::vec3 position, bool is_fly) 
     skybox(skybox)
 {
     camera = new Camera(position, is_fly);
+    map = new Map();
+}
+
+Level::Level(std::string name, Skybox* skybox, Camera* camera) :
+    name(name),
+    skybox(skybox),
+    camera(camera)
+{
+    map = new Map();
 }
 
 bool Level::get_status()
@@ -18,13 +27,8 @@ void Level::load_bullet()
         "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/golf_ball/model.obj",
         false), glm::vec3(0.0f),
         glm::vec3(1.0f), 5.0f, 10.0f);
-}
-
-Level::Level(std::string name, Skybox* skybox, Camera* camera) :
-    name(name),
-    skybox(skybox),
-    camera(camera)
-{
+    bullet->load();
+    bullet_collider = bullet->load_sphere_parameters(bullet);
 }
 
 Level::~Level()
@@ -35,12 +39,10 @@ Level::~Level()
 
 void Level::add_bullet(Window* window)
 {
-    if (glfwGetMouseButton(window->get_window(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-    {
-        bullet->set_start_position(camera);
-        bullets.push_back(new Bullet(bullet));
-        bullets.back()->load();
-    }
+    bullet->set_start_position(camera);
+    map->add_object(new Bullet(bullet));
+    map->back_object()->load();
+    map->back_object()->get_collider() = bullet_collider;
 }
 
 void Level::win()
@@ -50,24 +52,7 @@ void Level::win()
 
 void Level::load()
 {
-    load_vector(static_objects);
-    load_vector(enemies);
-}
-
-void Level::draw_vector(std::vector<Object*> objects, Window* window, Shader* object_shader, Shader* skybox_shader)
-{
-    for (int i = 0; i < objects.size(); i++)
-    {
-        objects[i]->draw(object_shader, window, camera, delta_time);
-    }
-}
-
-void Level::load_vector(std::vector<Object*> objects)
-{
-    for (int i = 0; i < objects.size(); i++)
-    {
-        objects[i]->load();
-    }
+    map->load();
 }
 
 // тут пока затычка, пока не реализована коллизия
@@ -82,6 +67,9 @@ void Level::set_status(Window* window)
 
 void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
 {
+    //std::cout << camera->get_direction().x << ' ' << camera->get_direction().y
+    //    << ' ' << camera->get_direction().z << std::endl;
+
     // время
     delta_time = Window::get_delta_time(last_frame);
     camera->input(window, delta_time);
@@ -92,23 +80,10 @@ void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
     // шейдер
     object_shader->use();
 
-    // статические объекты
-    draw_vector(static_objects, window, object_shader, skybox_shader);
-
-    // враги
-    draw_vector(enemies, window, object_shader, skybox_shader); // error
-
-    // выстрелы 
-    // TODO: многопоточность
-
-    /*std::thread th([&]() 
-    { 
-        add_bullet(camera, window); 
-        draw_vector(bullets, window, camera, object_shader, skybox_shader); 
-    });*/
-
-    add_bullet(window);
-    draw_vector(bullets, window, object_shader, skybox_shader); // тут вылетает ошибка
+    if (glfwGetMouseButton(window->get_window(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+        add_bullet(window);
+    // отрисовка всех объектов на карте
+    map->draw(object_shader, window, camera, delta_time);
     /*---------------------------------------------------------------------------*/
     // скайбокс
     skybox->draw(skybox_shader, camera, window, glm::vec3(0.0f), glm::vec3(50.0f));
@@ -126,10 +101,10 @@ void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
 
 void Level::add_enemy(Enemy* enemy)
 {
-	enemies.push_back(enemy);
+	map->add_object(enemy);
 }
 
 void Level::add_static_object(Object* object)
 {
-	static_objects.push_back(object);
+	map->add_object(object);
 }

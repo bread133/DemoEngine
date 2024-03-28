@@ -17,11 +17,9 @@ class Level
 {
 	Camera* camera;
 	std::string name;
-	std::vector<Object*> static_objects;
-	std::vector<Object*> enemies;
-	Map* map;
 	Bullet* bullet;
-	std::vector<Object*> bullets;
+	SphereCollider bullet_collider;
+	Map* map;
 	Skybox* skybox;
 	glm::vec3 size;
 	bool is_win = false;
@@ -29,8 +27,6 @@ class Level
 	float delta_time = 0.0f;
 	float last_frame = 0.0f;
 	void add_bullet(Window* window);
-	void load_vector(std::vector<Object*> objects);
-	void draw_vector(std::vector<Object*> objects, Window* window, Shader* object_shader, Shader* skybox_shader);
 	void set_status(Window* window);
 public:
 	Level(std::string name, Skybox* skybox, glm::vec3 position, bool is_fly);
@@ -43,6 +39,5 @@ public:
 	void draw(Window* window, Shader* object_shader, Shader* skybox_shader);
 	void add_enemy(Enemy* enemy);
 	void add_static_object(Object* object);
-
 	bool get_status();
 };
