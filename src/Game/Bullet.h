@@ -28,7 +28,7 @@ public:
 	/// <param name="scale">- размер соперника</param>
 	/// <param name="speed">- скорость врага</param>
 	/// <param name="length">- длина выстрела</param>
-	Bullet(Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length);
+	Bullet(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length);
 	Bullet(Bullet* bullet);
 	/// <summary>
 	/// деструктор.

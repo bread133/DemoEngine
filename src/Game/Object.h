@@ -7,6 +7,9 @@
 #include "src/Physic/Collider.h"
 
 #include <vector>
+#include <string>
+
+const int NAME_LENGTH = 20;
 
 class Object
 {
@@ -29,12 +32,12 @@ public:
 
 	Object(Model* model, glm::vec3 position, glm::vec3 scale,
 		glm::vec3 velosity, glm::vec3 force, float mass, ColliderType type);
-	Object(Model* model, glm::vec3 position, glm::vec3 scale, ColliderType type);
+	Object(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, ColliderType type);
 	~Object();
 	virtual void load();
 	virtual void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
 
-	Collider get_collider();
+	std::string get_name();
 	
 	inline SphereCollider load_sphere_parameters(Object* object);
 	inline ParallelepipedCollider load_parallelepiped_parameters(Object* object);

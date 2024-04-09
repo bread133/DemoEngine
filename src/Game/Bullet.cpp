@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
-Bullet::Bullet(Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length) :
-	Object(model, position, scale, glm::vec3(speed), glm::vec3(0.0f), 1.0f, SPHERE),
+Bullet::Bullet(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length) :
+	Object(name, model, position, scale, glm::vec3(speed), glm::vec3(0.0f), 1.0f, SPHERE),
 	length(length),
 	start_position(position),
 	is_living(true)
@@ -9,7 +9,7 @@ Bullet::Bullet(Model* model, glm::vec3 position, glm::vec3 scale, float speed, f
 }
 
 Bullet::Bullet(Bullet* bullet) :
-	Object(bullet->model, bullet->position, bullet->scale, 
+	Object(bullet->name, bullet->model, bullet->position, bullet->scale, 
 		bullet->velosity, bullet->force, bullet->mass, SPHERE),
 	length(bullet->length),
 	start_position(bullet->position),

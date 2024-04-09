@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(Model* model, glm::vec3 position, glm::vec3 scale, float speed, float damage, float hp, float distance) :
-	Object(model, position, scale, glm::vec3(speed), glm::vec3(1.0f), 1.0f, PARALLELEPIPED),
+Enemy::Enemy(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float damage, float hp, float distance) :
+	Object(name, model, position, scale, glm::vec3(speed), glm::vec3(1.0f), 1.0f, PARALLELEPIPED),
 	damage(damage),
 	hp(hp),
 	distance(glm::vec3(distance))
@@ -9,8 +9,8 @@ Enemy::Enemy(Model* model, glm::vec3 position, glm::vec3 scale, float speed, flo
 	is_living = true;
 }
 
-Enemy::Enemy(Model* model, glm::vec3 position) :
-	Object(model, position, scale, glm::vec3(SPEED_ENEMY), glm::vec3(1.0f), 1.0f, PARALLELEPIPED),
+Enemy::Enemy(std::string name, Model* model, glm::vec3 position) :
+	Object(name, model, position, scale, glm::vec3(SPEED_ENEMY), glm::vec3(1.0f), 1.0f, PARALLELEPIPED),
 	damage(DAMAGE),
 	hp(HP),
 	distance(DISTANCE)

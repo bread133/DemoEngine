@@ -18,7 +18,7 @@ class Level
 	Camera* camera;
 	std::string name;
 	Bullet* bullet;
-	SphereCollider bullet_collider;
+	Collider* bullet_collider;
 	Map* map;
 	Skybox* skybox;
 	glm::vec3 size;

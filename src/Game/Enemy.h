@@ -58,13 +58,13 @@ public:
 	/// <param name="damage">- урон, наносимый игроку</param>
 	/// <param name="hp">- его собственное здоровье</param>
 	/// <param name="distance">- дистанция между врагом и игроком, которая необходима в методе get_position()</param>
-	Enemy(Model* model, glm::vec3 position, glm::vec3 scale, float speed, float damage, float hp, float distance);
+	Enemy(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float damage, float hp, float distance);
 	/// <summary>
 	/// конструктор.
 	/// </summary>
 	/// <param name="model">- моделька соперника</param>
 	/// <param name="position">- позиция соперника</param>
-	Enemy(Model* model, glm::vec3 position);
+	Enemy(std::string name, Model* model, glm::vec3 position);
 	/// <summary>
 	/// деструктор.
 	/// </summary>

@@ -23,7 +23,7 @@ bool Level::get_status()
 
 void Level::load_bullet()
 {
-    bullet = new Bullet(new Model(
+    bullet = new Bullet("bullet", new Model(
         "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/golf_ball/model.obj",
         false), glm::vec3(0.0f),
         glm::vec3(1.0f), 5.0f, 10.0f);

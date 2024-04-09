@@ -46,7 +46,7 @@ ParallelepipedCollider Object::load_parallelepiped_parameters()
 	return Object::load_parallelepiped_parameters(this);
 }
 
-Object::Object(Model* model, glm::vec3 position, glm::vec3 scale,
+Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 scale,
 	glm::vec3 velosity, glm::vec3 force, float mass, ColliderType type) :
 	model(model),
 	position(position),
@@ -56,9 +56,16 @@ Object::Object(Model* model, glm::vec3 position, glm::vec3 scale,
 	mass(mass),
 	collider_type(type)
 {
+	if (name.size() >= NAME_LENGTH) 
+	{
+		std::string error_message = "Превышена длина названия строки. Имя должно содержать "
+			+ NAME_LENGTH;
+		throw(error_message);
+}
+	this->name = name;
 }
 
-Object::Object(Model* model, glm::vec3 position, glm::vec3 scale, ColliderType type) :
+Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, ColliderType type) :
 	model(model),
 	position(position),
 	scale(scale),
@@ -67,6 +74,13 @@ Object::Object(Model* model, glm::vec3 position, glm::vec3 scale, ColliderType t
 	mass(0.0f),
 	collider_type(type)
 {
+	if (name.size() >= NAME_LENGTH)
+	{
+		std::string error_message = "Превышена длина названия строки. Имя должно содержать "
+			+ NAME_LENGTH;
+		throw(error_message);
+}
+	this->name = name;
 }
 
 Object::~Object()
