@@ -58,6 +58,11 @@ src/Physic/Map.cpp
 src/Physic/Map.h
 src/Physic/Collider.cpp
 src/Physic/Collider.h
+src/Physic/Collision.cpp
+src/Physic/Collision.h
+
+src/Debug/FileHandler.cpp
+src/Debug/FileHandler.h
 )
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
