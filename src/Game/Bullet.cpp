@@ -46,4 +46,6 @@ bool Bullet::get_is_living()
 void Bullet::load()
 {
 	model->load_model();
+	// лог
+	FileHandler::write_line_load_object(name);
 }

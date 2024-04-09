@@ -11,7 +11,7 @@ void Object::load_collision_parameters()
 		collider = load_parallelepiped_parameters();
 		break;
 	case NONE:
-		collider = NoneCollider();
+		collider = new Collider(NONE);
 		break;
 	default:
 		throw("Не указан тип коллизии.");
@@ -36,12 +36,12 @@ std::pair<glm::vec3, glm::vec3> Object::get_min_max()
 	return std::pair<glm::vec3, glm::vec3>(min, max);
 }
 
-SphereCollider Object::load_sphere_parameters()
+Collider* Object::load_sphere_parameters()
 {
 	return Object::load_sphere_parameters(this);
 }
 
-ParallelepipedCollider Object::load_parallelepiped_parameters()
+Collider* Object::load_parallelepiped_parameters()
 {
 	return Object::load_parallelepiped_parameters(this);
 }
@@ -58,10 +58,10 @@ Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 sca
 {
 	if (name.size() >= NAME_LENGTH) 
 	{
-		std::string error_message = "РџСЂРµРІС‹С€РµРЅР° РґР»РёРЅР° РЅР°Р·РІР°РЅРёСЏ СЃС‚СЂРѕРєРё. РРјСЏ РґРѕР»Р¶РЅРѕ СЃРѕРґРµСЂР¶Р°С‚СЊ "
+		std::string error_message = "Превышена длина названия строки. Имя должно содержать "
 			+ NAME_LENGTH;
 		throw(error_message);
-}
+	}
 	this->name = name;
 }
 
@@ -76,10 +76,10 @@ Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 sca
 {
 	if (name.size() >= NAME_LENGTH)
 	{
-		std::string error_message = "РџСЂРµРІС‹С€РµРЅР° РґР»РёРЅР° РЅР°Р·РІР°РЅРёСЏ СЃС‚СЂРѕРєРё. РРјСЏ РґРѕР»Р¶РЅРѕ СЃРѕРґРµСЂР¶Р°С‚СЊ "
+		std::string error_message = "Превышена длина названия строки. Имя должно содержать "
 			+ NAME_LENGTH;
 		throw(error_message);
-}
+	}
 	this->name = name;
 }
 
@@ -93,6 +93,9 @@ void Object::load()
 	model->load_model();
 	// коллайдеры
 	load_collision_parameters();
+	// логи
+	FileHandler::write_line_load_object(name);
+	FileHandler::write_line_collider_parameters(collider);
 }
 
 void Object::draw(Shader* shader, Window* window, Camera* camera, float delta_time)
@@ -101,36 +104,33 @@ void Object::draw(Shader* shader, Window* window, Camera* camera, float delta_ti
 	model->draw(shader);
 }
 
-Collider Object::get_collider()
+std::string Object::get_name()
 {
-	return collider;
+	return name;
 }
 
-SphereCollider Object::load_sphere_parameters(Object* object)
+Collider* Object::load_sphere_parameters(Object* object)
 {
 	std::pair<glm::vec3, glm::vec3> min_max = object->get_min_max();
 	glm::vec3 min = min_max.first;
 	glm::vec3 max = min_max.second;
 
-	SphereCollider _collider = SphereCollider();
-	_collider.center = (max - min) / 2.0f;
-	_collider.radius = object->model->mesh->vertices[0].position
-		- _collider.center;
+	Collider* _collider = new Collider(SPHERE);
+	_collider->center = (max + min) / 2.0f;
+	_collider->collision_points.max_point = 
+		object->model->mesh->vertices[0].position - _collider->center;
 
 	return _collider;
 }
 
-ParallelepipedCollider Object::load_parallelepiped_parameters(Object* object)
+Collider* Object::load_parallelepiped_parameters(Object* object)
 {
 	std::pair<glm::vec3, glm::vec3> min_max = object->get_min_max();
 
-	ParallelepipedCollider _collider = ParallelepipedCollider();
-	_collider.max_point = min_max.second;
-	_collider.min_point = min_max.first;
-	_collider.center = (_collider.max_point -
-		_collider.min_point) / 2.0f;
-
-	_collider.diff = _collider.max_point - _collider.center;
+	Collider* _collider = new Collider(PARALLELEPIPED);
+	_collider->collision_points.max_point = min_max.second;
+	_collider->collision_points.min_point = min_max.first;
+	_collider->center = (min_max.second + min_max.first) / 2.0f;
 
 	return _collider;
 }

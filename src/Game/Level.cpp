@@ -29,6 +29,7 @@ void Level::load_bullet()
         glm::vec3(1.0f), 5.0f, 10.0f);
     bullet->load();
     bullet_collider = bullet->load_sphere_parameters(bullet);
+    FileHandler::write_line_collider_parameters(bullet_collider);
 }
 
 Level::~Level()
@@ -42,7 +43,7 @@ void Level::add_bullet(Window* window)
     bullet->set_start_position(camera);
     map->add_object(new Bullet(bullet));
     map->back_object()->load();
-    map->back_object()->get_collider() = bullet_collider;
+    map->back_object()->collider = bullet_collider;
 }
 
 void Level::win()
