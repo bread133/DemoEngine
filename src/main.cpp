@@ -93,13 +93,17 @@ int main()
 
     // Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
     //     false), glm::vec3(5.0f));
-    test_level_1->add_enemy(new Enemy(new Model(
-        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
-        false), glm::vec3(0.0f, 0.0f, 5.0f)));
+    // test_level_1->add_enemy(new Enemy("what_1", new Model(
+    //     "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
+    //     false), glm::vec3(0.0f, 0.0f, 5.0f)));
 
-    test_level_1->add_enemy(new Enemy(new Model(
+    test_level_1->add_enemy(new Enemy("what_2", new Model(
         "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
         false), glm::vec3(0.0f, 0.0f, -5.0f)));
+
+    test_level_1->add_static_object(new Object("sphere", new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/golf_ball/model.obj",
+        false), glm::vec3(0.0f), glm::vec3(1.0f), SPHERE));
 
     // test_level_2->add_enemy(new Enemy(new Model(
     //     "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
