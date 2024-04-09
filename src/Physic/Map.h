@@ -2,11 +2,13 @@
 #include "src/Game/Object.h"
 #include "src/Game/Enemy.h"
 #include "src/Game/Bullet.h"
+#include "src/Physic/Collision.h"
+#include "src/Debug/FileHandler.h"
 
 class Map
 {
 	std::vector<Object*> objects;
-	void collision_detector();
+	void collision_detector(Object* first);
 public:
 	glm::vec3 gravity = glm::vec3(0.0f, -0.1f, 0.0f); // ускорение свободного падения
 

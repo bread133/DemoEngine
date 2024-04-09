@@ -1,4 +1,7 @@
+#pragma once
+
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <string>
 
 enum ColliderType
@@ -8,41 +11,22 @@ enum ColliderType
 	NONE = 4,
 };
 
+struct CollisionPoints
+{
+	// это может быть как радиус, так и максимальная точка
+	glm::vec3 max_point;
+	// если это SphereCollider, то тут 0
+	glm::vec3 min_point;
+};
+
 struct Collider
 {
-public:
 	ColliderType collider_type;
+	glm::vec3 center;
+	CollisionPoints collision_points;
 
-	Collider();
+	Collider(ColliderType collider_type);
 	~Collider();
-};
 
-struct SphereCollider : public Collider
-{
-public:
-	glm::vec3 center;
-	glm::vec3 radius;
-
-	SphereCollider();
-	~SphereCollider();
-};
-
-struct ParallelepipedCollider : public Collider
-{
-public:
-	glm::vec3 min_point;
-	glm::vec3 max_point;
-	glm::vec3 center;
-
-	glm::vec3 diff;
-
-	ParallelepipedCollider();
-	~ParallelepipedCollider();
-};
-
-struct NoneCollider : public Collider
-{
-public:
-	NoneCollider();
-	~NoneCollider();
+	Collider() = delete;
 };

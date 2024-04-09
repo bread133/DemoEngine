@@ -1,5 +1,23 @@
 #include "Map.h"
 
+void Map::collision_detector(Object* first)
+{
+	for (Object* second : objects)
+	{
+		if (first == second)
+			continue;
+
+		Collision* test = new Collision(first, second);
+		std::string path = "C://Users/bread/source/repos/DemoEngineWithCMake/src/Debug/log.txt";
+		// TODO: логи, господи прости
+
+		if (test->collision_detector())
+		{
+			std::cout << "COLLISION DETECT" << std::endl;
+		}
+	}
+}
+
 Map::Map()
 {
 }
@@ -52,10 +70,10 @@ Object* Map::back_object()
 void Map::draw(Shader* object_shader, Window* window, 
 	Camera* camera, float delta_time)
 {
-	// collision_detector();
-
 	for (Object* object : objects)
 	{
+		FileHandler::write_line_position(object->position, object->get_name());
+		collision_detector(object);
 		object->draw(object_shader, window, camera, delta_time);
 		// gravity_step(object, delta_time);
 	}

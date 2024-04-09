@@ -8,18 +8,24 @@
 
 class Collision
 {
+	Collider* first;
+	glm::vec3 position_first;
+	Collider* second;
+	glm::vec3 position_second;
+	const float margin = 0.5f;
+
+	bool parallelepiped_parallelepiped();
+	bool sphere_sphere();
+	bool parallelepiped_sphere();
+
 	// const int* table_of_collide = new int[]{
 					// sphere	paral-ed			none
 	// sphere			1,			1,				0,
 	//paral - ed		1,			1,				0,
 	// none				0,			0,				0	};
-
-	inline bool sphere_sphere_collision(Object* first, Object* second);
-	inline bool sphere_parallelepiped_collision(Object* first, Object* second);
-	inline bool parallelepiped_parallelepiped_collision(Object* first, Object* second);
-	inline bool intersect_sphere_parallelepiped(ParallelepipedCollider pc,
-		glm::vec3 pos_pc, SphereCollider sc, glm::vec3 pos_sc);
 public:
-	inline bool collision_detector(Object* first, Object* second);
-	inline bool collision_detector(std::pair<Object*, Object*> objects);
+	Collision(Object* first, Object* second);
+	Collision(std::pair<Object*, Object*> objects);
+	~Collision();
+	bool collision_detector();
 };
