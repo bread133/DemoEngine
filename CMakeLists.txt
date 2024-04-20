@@ -60,6 +60,8 @@ src/Physic/Collider.cpp
 src/Physic/Collider.h
 src/Physic/Collision.cpp
 src/Physic/Collision.h
+src/Physic/CollisionSolver.cpp
+src/Physic/CollisionSolver.h
 
 src/Debug/FileHandler.cpp
 src/Debug/FileHandler.h
