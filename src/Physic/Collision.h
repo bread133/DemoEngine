@@ -6,13 +6,15 @@
 #include <glm/vec3.hpp>
 #include <string>
 
+
+const float MARGIN = 0.5f;
+
 class Collision
 {
 	Collider* first;
 	glm::vec3 position_first;
 	Collider* second;
 	glm::vec3 position_second;
-	const float margin = 0.5f;
 
 	bool parallelepiped_parallelepiped();
 	bool sphere_sphere();
