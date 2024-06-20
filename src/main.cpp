@@ -1,4 +1,4 @@
-#include "src/Game/Game.h"
+#include <src/Game/Game.h>
 #include <filesystem>
 #include <iostream>
 
@@ -71,15 +71,17 @@ int main()
 
     // float delta_time = 0.0f;
     // float last_frame = 0.0f;
-    Camera* camera = new Camera(glm::vec3(0.0f), true);
-    /*------------------------------------------------------------*/
-    Game* game = new Game(window, object_shader, skybox_shader);
-    /*------------------------------------------------------------*/
-    Level* test_level_1 = new Level("default_1", new Skybox(faces, 
-        skybox_shader), camera);
 
-    Level* test_level_2 = new Level("default_2", new Skybox(faces_2,
-        skybox_shader), camera);
+    Camera* camera = new Camera(glm::vec3(0.0f), false);
+    Player* player = new Player(camera);
+    /*------------------------------------------------------------*/
+    Game* game = new Game(window, object_shader, skybox_shader, true);
+    /*------------------------------------------------------------*/
+    Level* test_level_1 = new Level("default_1", new Skybox(faces_2, 
+        skybox_shader), camera, player);
+
+    Level* test_level_2 = new Level("default_2", new Skybox(faces,
+        skybox_shader), camera, player);
     
     // Object* static_object = new Object(new Model(get_path_of_project("src/Render/Resources/Models/saul_goodman/model.obj"),
     //     false), glm::vec3(0.0f), glm::vec3(2.0));
@@ -93,17 +95,31 @@ int main()
 
     // Enemy* enemy = new Enemy(new Model(get_path_of_project("src\\Render\\Resources\\Models\\Spaceship/spaceship.obj"),
     //     false), glm::vec3(5.0f));
-    // test_level_1->add_enemy(new Enemy("what_1", new Model(
-    //     "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
-    //     false), glm::vec3(0.0f, 0.0f, 5.0f)));
 
-    test_level_1->add_enemy(new Enemy("what_2", new Model(
-        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
-        false), glm::vec3(0.0f, 0.0f, -5.0f)));
+    Model* enemy_model = new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/demo_game/enemy/model.obj", true);
 
-    test_level_1->add_static_object(new Object("sphere", new Model(
-        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/golf_ball/model.obj",
-        false), glm::vec3(0.0f), glm::vec3(1.0f), SPHERE));
+    test_level_1->add_enemy(new Enemy("what_1", enemy_model, glm::vec3(0.0f, 0.0f, 2.0f), true, false));
+
+    test_level_1->add_enemy(new Enemy("what_2", enemy_model, glm::vec3(0.0f, 0.0f, -2.0f), false, true));
+
+    test_level_1->add_static_object(new Object("floor", new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/demo_game/floor/model_gross.obj", false),
+        glm::vec3(0.0f, -2.0f, 0.0f), glm::vec3(1.0f), NONE, SCENE, false));
+
+    test_level_1->add_static_object(new Object("wall_1", new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/demo_game/wall/model.obj", false),
+        glm::vec3(7.0f, -2.0f, 0.0f), glm::vec3(1.0f), PARALLELEPIPED, SCENE, false));
+
+    test_level_1->add_static_object(new Object("wall_2", new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/demo_game/wall/model.obj", false),
+        glm::vec3(-15.0f, -2.0f, 0.0f), glm::vec3(1.0f), PARALLELEPIPED, SCENE, false));
+
+    /*test_level_1->add_static_object(new Object("sphere", new Model(
+        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/mountain/mount.blend1.obj",
+        false), glm::vec3(0.0f), glm::vec3(1.0f), SPHERE, SCENE));*/
+
+    // test_level_1->add_light(new LightPoint(glm::vec3(0.0f), glm::vec4(1.0f, 0.3f, 0.6f, 1.0f)));
 
     // test_level_2->add_enemy(new Enemy(new Model(
     //     "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/test_enemy/test_enemy.obj",
