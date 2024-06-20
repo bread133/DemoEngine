@@ -1,9 +1,10 @@
 #include "Game.h"
 
-Game::Game(Window* window, Shader* object_shader, Shader* skybox_shader) :
+Game::Game(Window* window, Shader* object_shader, Shader* skybox_shader, bool has_impulse_for_bullet) :
 	window(window),
 	object_shader(object_shader),
-	skybox_shader(skybox_shader)
+	skybox_shader(skybox_shader),
+	has_impulse_for_bullet(has_impulse_for_bullet)
 {
 	index = 0;
 
@@ -54,13 +55,13 @@ void Game::start()
 {
 	// всякие проверки
 	if (levels.empty())
-		throw;
+		throw "нет уровней в игре";
 
 	while(!window->window_is_closed() && !win)
 	{
 		// тут должен быть init текущего уровня
 		levels[index]->load();
-		levels[index]->load_bullet();
+		levels[index]->load_bullet(has_impulse_for_bullet);
 
 		render();
 		if (window->is_exit())

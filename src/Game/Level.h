@@ -1,11 +1,15 @@
 #pragma once
-#include "../Render/Graphic/Skybox.h"
-#include "Enemy.h"
-#include "Bullet.h"
+
+#include <src/Render/Graphic/Skybox.h>
+#include <src/Render/Graphic/Light.h>
+
+#include <src/Game/Enemy.h>
+#include <src/Game/Bullet.h>
+
+#include <src/Physic/Map.h>
 
 #include <vector>
 #include <thread>
-#include <src/Physic/Map.h>
 
 /// <summary>
 ///  ласс, позвол€ющий добавить уровень в игру. 
@@ -17,8 +21,7 @@ class Level
 {
 	Camera* camera;
 	std::string name;
-	Bullet* bullet;
-	Collider* bullet_collider;
+	Player* player;
 	Map* map;
 	Skybox* skybox;
 	glm::vec3 size;
@@ -26,18 +29,20 @@ class Level
 
 	float delta_time = 0.0f;
 	float last_frame = 0.0f;
-	void add_bullet(Window* window);
 	void set_status(Window* window);
 public:
-	Level(std::string name, Skybox* skybox, glm::vec3 position, bool is_fly);
-	Level(std::string name, Skybox* skybox, Camera* camera);
+	Level(std::string name, Skybox* skybox, glm::vec3 position, bool is_fly, Player* player);
+	Level(std::string name, Skybox* skybox, Camera* camera, Player* player);
 	~Level();
 
 	void win();
 	void load();
-	void load_bullet();
+	void load_bullet(bool has_impulse);
 	void draw(Window* window, Shader* object_shader, Shader* skybox_shader);
 	void add_enemy(Enemy* enemy);
 	void add_static_object(Object* object);
+	void add_light(LightPoint* light);
+	void remove_light(LightPoint* light);
+
 	bool get_status();
 };

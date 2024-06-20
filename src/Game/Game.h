@@ -1,5 +1,6 @@
 #pragma once
-#include "Level.h"
+#include <src/Game/Level.h>
+#include <src/Game/Player.h>
 
 class Game
 {
@@ -11,8 +12,9 @@ class Game
 	bool win = false;
 	void next_level();
 	void render();
+	bool has_impulse_for_bullet;
 public:
-	Game(Window* window, Shader* object_shader,	Shader* skybox_shader);
+	Game(Window* window, Shader* object_shader,	Shader* skybox_shader, bool has_impulse_for_bullet);
 	~Game();
 	void add_level(Level* level);
 	void start();

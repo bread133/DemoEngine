@@ -10,37 +10,18 @@
 class Bullet final : public Object
 {
 	glm::vec3 start_position;
-	/// <summary>
-	/// длина выстрела.
-	/// </summary>
 	float length;
-	/// <summary>
-	/// отображение выстрела.
-	/// </summary>
-	bool is_living;
 	void set_position(Camera* camera, float delta_time);
 public:
-	/// <summary>
-	/// конструктор.
-	/// </summary>
-	/// <param name="model">- моделька соперника</param>
-	/// <param name="position">- позиция соперника</param>
-	/// <param name="scale">- размер соперника</param>
-	/// <param name="speed">- скорость врага</param>
-	/// <param name="length">- длина выстрела</param>
-	Bullet(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length);
+	float damage;
+	Bullet(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float length, float damage, bool has_impulse);
 	Bullet(Bullet* bullet);
-	/// <summary>
-	/// деструктор.
-	/// </summary>
 	~Bullet();
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <returns>если разница между стартом и текущей точкой больше, 
-	/// то false</returns>
-	bool get_is_living();
+
 	void set_start_position(Camera* camera);
+	void set_start_position(glm::vec3 position);
+	void set_position(glm::vec3 position, float delta_time);
 	void load();
 	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
+	void collider_solver(Object* object) override;
 };

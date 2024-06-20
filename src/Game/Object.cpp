@@ -5,13 +5,13 @@ void Object::load_collision_parameters()
 	switch (collider_type)
 	{
 	case SPHERE:
-		collider = load_sphere_parameters();
+		collider = load_sphere_parameters(has_impulse);
 		break;
 	case PARALLELEPIPED:
-		collider = load_parallelepiped_parameters();
+		collider = load_parallelepiped_parameters(has_impulse);
 		break;
 	case NONE:
-		collider = new Collider(NONE);
+		collider = new Collider(NONE, has_impulse);
 		break;
 	default:
 		throw("Не указан тип коллизии.");
@@ -36,43 +36,27 @@ std::pair<glm::vec3, glm::vec3> Object::get_min_max()
 	return std::pair<glm::vec3, glm::vec3>(min, max);
 }
 
-Collider* Object::load_sphere_parameters()
+Collider* Object::load_sphere_parameters(bool has_impulse)
 {
-	return Object::load_sphere_parameters(this);
+	return Object::load_sphere_parameters(this, has_impulse);
 }
 
-Collider* Object::load_parallelepiped_parameters()
+Collider* Object::load_parallelepiped_parameters(bool has_impulse)
 {
-	return Object::load_parallelepiped_parameters(this);
+	return Object::load_parallelepiped_parameters(this, has_impulse);
 }
 
 Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 scale,
-	glm::vec3 velosity, glm::vec3 force, float mass, ColliderType type) :
-	model(model),
-	position(position),
-	scale(scale),
-	velosity(velosity),
-	force(force),
-	mass(mass),
-	collider_type(type)
-{
-	if (name.size() >= NAME_LENGTH) 
-	{
-		std::string error_message = "Превышена длина названия строки. Имя должно содержать "
-			+ NAME_LENGTH;
-		throw(error_message);
-	}
-	this->name = name;
-}
-
-Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, ColliderType type) :
+	ColliderType type, ObjectType object_type, bool has_impulse) :
 	model(model),
 	position(position),
 	scale(scale),
 	velosity(glm::vec3(0.0f)),
 	force(glm::vec3(0.0f)),
 	mass(0.0f),
-	collider_type(type)
+	collider_type(type),
+	object_type(object_type),
+	has_impulse(has_impulse)
 {
 	if (name.size() >= NAME_LENGTH)
 	{
@@ -81,6 +65,30 @@ Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 sca
 		throw(error_message);
 	}
 	this->name = name;
+	this->is_living = true;
+}
+
+Object::Object(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, 
+	glm::vec3 velosity, glm::vec3 force, float mass, ColliderType type, ObjectType object_type, 
+	bool has_impulse) :
+	model(model),
+	position(position),
+	scale(scale),
+	velosity(velosity),
+	force(force),
+	mass(mass),
+	collider_type(type),
+	object_type(object_type),
+	has_impulse(has_impulse)
+{
+	if (name.size() >= NAME_LENGTH)
+	{
+		std::string error_message = "Превышена длина названия строки. Имя должно содержать "
+			+ NAME_LENGTH;
+		throw(error_message);
+	}
+	this->name = name;
+	this->is_living = true;
 }
 
 Object::~Object()
@@ -104,18 +112,27 @@ void Object::draw(Shader* shader, Window* window, Camera* camera, float delta_ti
 	model->draw(shader);
 }
 
+void Object::collider_solver(Object* object)
+{
+}
+
 std::string Object::get_name()
 {
 	return name;
 }
 
-Collider* Object::load_sphere_parameters(Object* object)
+ObjectType Object::get_object_type()
+{
+	return object_type;
+}
+
+Collider* Object::load_sphere_parameters(Object* object, bool has_impulse)
 {
 	std::pair<glm::vec3, glm::vec3> min_max = object->get_min_max();
 	glm::vec3 min = min_max.first;
 	glm::vec3 max = min_max.second;
 
-	Collider* _collider = new Collider(SPHERE);
+	Collider* _collider = new Collider(SPHERE, has_impulse);
 	_collider->center = (max + min) / 2.0f;
 	_collider->collision_points.max_point = 
 		object->model->mesh->vertices[0].position - _collider->center;
@@ -123,11 +140,11 @@ Collider* Object::load_sphere_parameters(Object* object)
 	return _collider;
 }
 
-Collider* Object::load_parallelepiped_parameters(Object* object)
+Collider* Object::load_parallelepiped_parameters(Object* object, bool has_impulse)
 {
 	std::pair<glm::vec3, glm::vec3> min_max = object->get_min_max();
 
-	Collider* _collider = new Collider(PARALLELEPIPED);
+	Collider* _collider = new Collider(PARALLELEPIPED, has_impulse);
 	_collider->collision_points.max_point = min_max.second;
 	_collider->collision_points.min_point = min_max.first;
 	_collider->center = (min_max.second + min_max.first) / 2.0f;

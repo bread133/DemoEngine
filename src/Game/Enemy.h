@@ -1,9 +1,11 @@
 #pragma once
-#include "../Render/Graphic/Model.h"
-#include "../Render/Graphic/Shader.h"
-#include "Object.h"
-#include "../Render/Window.h"
-#include "../Render/Graphic/Camera.h"
+#include <src/Game/Object.h>
+#include <src/Game/Bullet.h>
+
+#include <src/Render/Graphic/Model.h>
+#include <src/Render/Graphic/Shader.h>
+#include <src/Render/Window.h>
+#include <src/Render/Graphic/Camera.h>
 
 #include <glm/vec3.hpp>
 #include <vector>
@@ -18,11 +20,6 @@ const glm::vec3		DISTANCE = glm::vec3(3.0f);
 /// </summary>
 class Enemy : public Object
 {
-	/// <summary>
-	/// урон, наносимый игроку.
-	/// </summary>
-	float damage;
-	/// <summary>
 	/// его собственное здоровье.
 	/// </summary>
 	signed int hp;
@@ -43,10 +40,10 @@ class Enemy : public Object
 	/// <param name="camera"></param>
 	/// <param name="delta_time"></param>
 	void set_position(Camera* camera, float delta_time);
-	/// <summary>
-	/// меняет значение is_alive на false.
-	/// </summary>
-	void is_dead();
+	void set_hard_position(Camera* camera, float delta_time, std::vector<glm::vec3>& hard_position);
+
+	bool has_weapon;
+	bool has_bost = false;
 public:
 	/// <summary>
 	/// конструктор.
@@ -58,13 +55,14 @@ public:
 	/// <param name="damage">- урон, наносимый игроку</param>
 	/// <param name="hp">- его собственное здоровье</param>
 	/// <param name="distance">- дистанция между врагом и игроком, которая необходима в методе get_position()</param>
-	Enemy(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float damage, float hp, float distance);
+	Enemy(std::string name, Model* model, glm::vec3 position, glm::vec3 scale, float speed, float hp, 
+		float distance, bool has_impulse, bool has_weapon);
 	/// <summary>
 	/// конструктор.
 	/// </summary>
 	/// <param name="model">- моделька соперника</param>
 	/// <param name="position">- позиция соперника</param>
-	Enemy(std::string name, Model* model, glm::vec3 position);
+	Enemy(std::string name, Model* model, glm::vec3 position, bool has_impulse, bool has_weapon);
 	/// <summary>
 	/// деструктор.
 	/// </summary>
@@ -75,4 +73,5 @@ public:
 	/// <returns>если живой, то true, в обратном случае - false</returns>
 	bool get_is_living();
 	void draw(Shader* shader, Window* window, Camera* camera, float delta_time);
+	void collider_solver(Object* object) override;
 };

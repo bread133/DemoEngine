@@ -1,19 +1,21 @@
 #include "Level.h"
 
-Level::Level(std::string name, Skybox* skybox, glm::vec3 position, bool is_fly) :
-    name(name),
-    skybox(skybox)
-{
-    camera = new Camera(position, is_fly);
-    map = new Map();
-}
-
-Level::Level(std::string name, Skybox* skybox, Camera* camera) :
+Level::Level(std::string name, Skybox* skybox, glm::vec3 position, bool is_fly, Player* player) :
     name(name),
     skybox(skybox),
-    camera(camera)
+    player(player)
 {
-    map = new Map();
+    camera = new Camera(position, is_fly);
+    map = new Map(player);
+}
+
+Level::Level(std::string name, Skybox* skybox, Camera* camera, Player* player) :
+    name(name),
+    skybox(skybox),
+    camera(camera),
+    player(player)
+{
+    map = new Map(player);
 }
 
 bool Level::get_status()
@@ -21,29 +23,15 @@ bool Level::get_status()
     return is_win;
 }
 
-void Level::load_bullet()
+void Level::load_bullet(bool has_impulse)
 {
-    bullet = new Bullet("bullet", new Model(
-        "C://Users/bread/source/repos/DemoEngineWithCMake/src/Render/Resources/Models/golf_ball/model.obj",
-        false), glm::vec3(0.0f),
-        glm::vec3(1.0f), 5.0f, 10.0f);
-    bullet->load();
-    bullet_collider = bullet->load_sphere_parameters(bullet);
-    FileHandler::write_line_collider_parameters(bullet_collider);
+    map->load_bullet(has_impulse);
 }
 
 Level::~Level()
 {
     delete skybox;
     delete camera;
-}
-
-void Level::add_bullet(Window* window)
-{
-    bullet->set_start_position(camera);
-    map->add_object(new Bullet(bullet));
-    map->back_object()->load();
-    map->back_object()->collider = bullet_collider;
 }
 
 void Level::win()
@@ -63,8 +51,7 @@ void Level::set_status(Window* window)
     {
         window->poll_events_timeout(1.0f);
         is_win = true;
-    }
-}
+    }}
 
 void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
 {
@@ -82,7 +69,7 @@ void Level::draw(Window* window, Shader* object_shader, Shader* skybox_shader)
     object_shader->use();
 
     if (glfwGetMouseButton(window->get_window(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-        add_bullet(window);
+        map->add_bullet(window, camera);
     // отрисовка всех объектов на карте
     map->draw(object_shader, window, camera, delta_time);
     /*---------------------------------------------------------------------------*/
@@ -109,3 +96,18 @@ void Level::add_static_object(Object* object)
 {
 	map->add_object(object);
 }
+
+void Level::add_light(LightPoint* light)
+{
+    if (!map)
+        throw("Неинициализирована переменная map");
+    map->add_light(light);
+}
+
+void Level::remove_light(LightPoint* light)
+{
+    if (!map)
+        throw("Неинициализирована переменная map");
+    map->remove_light(light);
+}
+
