@@ -11,3 +11,6 @@
 /src/Phisic/Collision.cpp
 /src/Phisic/Collision.h
 /src/Debug/logs.txt
+/out/build/x64-Debug
+/src/Debug/PhysicTest.h
+*.h
