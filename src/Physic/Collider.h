@@ -24,8 +24,14 @@ struct Collider
 	ColliderType collider_type;
 	glm::vec3 center;
 	CollisionPoints collision_points;
+	/// <summary>
+	/// есть ли соприкосновение предметов
+	/// </summary>
+	bool collision_is_detect = false;
 
-	Collider(ColliderType collider_type);
+	bool has_impulse = false; // есть ли импульс
+
+	Collider(ColliderType collider_type, bool has_impulse);
 	~Collider();
 
 	Collider() = delete;

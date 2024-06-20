@@ -73,6 +73,8 @@ Collision::Collision(Object* first, Object* second)
 		this->second = first->collider;
 		this->position_second = first->position;
 		break;
+	case NONE:
+		break;
 	default:
 		throw("Некорректный тип фигуры. вычисление коллизии не представляется возможным.");
 	}
@@ -107,6 +109,57 @@ bool Collision::collision_detector()
 	case NONE | PARALLELEPIPED:
 		return false;
 	default:
-		throw("Есть необработанные коллизии. ГГ");
+		throw("Есть необработанные коллизии. Обработайте их.");
 	}
+}
+
+Collider* Collision::get_first()
+{
+	return first;
+}
+
+Collider* Collision::get_second()
+{
+	return second;
+}
+
+ColliderType Collision::get_first_type()
+{
+	return first->collider_type;
+}
+
+ColliderType Collision::get_second_type()
+{
+	return second->collider_type;
+}
+
+Object* Collision::get_first_object()
+{
+	return object_first;
+}
+
+Object* Collision::get_second_object()
+{
+	return object_second;
+}
+
+void Collision::set_collision_detect(bool first_choise, bool second_choise)
+{
+	if (get_first_type() == NONE && get_second_type() == NONE)
+		return;
+
+	if (get_first_type() == NONE)
+	{
+		second->collision_is_detect = second_choise;
+		return;
+	}
+
+	if (get_second_type() == NONE)
+	{
+		first->collision_is_detect = second_choise;
+		return;
+	}
+
+	first->collision_is_detect = first_choise;
+	second->collision_is_detect = second_choise;
 }
