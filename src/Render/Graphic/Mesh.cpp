@@ -98,5 +98,9 @@ void Mesh::setup_mesh()
     // weights
     glEnableVertexAttribArray(6);
     glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_weights));
+
+    // light points
+    // glEnableVertexAttribArray(7);
+    // glVertexAttribIPointer(7, 4, GL_INT, 0, &value);
     glBindVertexArray(0);
 }

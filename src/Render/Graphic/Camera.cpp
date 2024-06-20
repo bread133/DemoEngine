@@ -11,6 +11,7 @@ Camera::Camera(glm::vec3 position, bool is_fly) :
     initial_fov(FOV),
     is_fly(is_fly)
 {
+    this->y_position_if_is_fly_false = position.y;
     update_camera_vectors();
 }
 // constructor with scalar values
@@ -24,6 +25,7 @@ Camera::Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, fl
     initial_fov(fov),
     is_fly(is_fly)
 {
+    this->y_position_if_is_fly_false = position.y;
     update_camera_vectors();
 }
 
@@ -36,7 +38,6 @@ glm::vec3 Camera::get_position()
     return position;
 }
 
-// processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
 void Camera::process_keyboard(Camera_Movement move, float delta_time)
 {
     switch (move) 
@@ -130,6 +131,8 @@ glm::mat4 Camera::get_projection_matrix(Window* window)
 
 glm::mat4 Camera::get_view_matrix()
 {
+    if (!is_fly)
+        position.y = y_position_if_is_fly_false;
     return glm::lookAt(
         position,
         position + direction,

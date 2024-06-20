@@ -50,6 +50,7 @@ class Camera
     float speed;
     float mouse_speed;
     bool is_fly;
+    float y_position_if_is_fly_false;
 
     void update_camera_vectors();
     void get_mouse_position(Window* window, float delta_time);
